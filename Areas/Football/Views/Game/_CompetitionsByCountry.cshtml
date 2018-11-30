@@ -1,0 +1,93 @@
+﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $("#england").click(function () {
+            $("#engComp").toggle()
+        });
+
+        $("#germany").click(function () {
+            $("#germComp").toggle()
+        });
+
+        $("#spain").click(function () {
+            $("#spainComp").toggle()
+        });
+
+        $("#italy").click(function () {
+            $("#itaComp").toggle()
+        });
+    });
+</script>
+
+<style>
+
+    .divPadding {
+        padding: 15px 15px;
+        background-color:lightgrey;
+    }
+
+    h4 {
+        cursor: pointer;
+    }
+
+    h4:hover {
+        color: white;
+        
+    }
+
+    .hiddenDiv {
+        display:none
+    }
+
+
+    a:hover {
+        font-weight:bold;
+        text-decoration-line:none
+    }
+
+    a:link{
+        text-decoration-line: none
+    }
+
+
+</style>
+
+<div class="divPadding">
+    <div>
+        <h4 id="england">АНГЛИЯ</h4>
+        <div id="engComp" class="hiddenDiv">
+            <p><a href="#">Висша Лига</a></p>
+            <p><a href="#">Чемпиъншип</a></p>
+            <p><a href="#">Лига Едно</a></p>
+            <p><a href="#">Лига Две</a></p>
+        </div>
+    </div>
+    <div>
+        <h4 id="germany">ГЕРМАНИЯ</h4>
+        <div id="germComp" class="hiddenDiv">
+            <p><a href="#">Първа Бундеслига</a></p>
+            <p><a href="#">Втора Бундеслига</a></p>
+        </div>
+
+    </div>
+    <div>
+        <h4 id="spain">ИСПАНИЯ</h4>
+        <div id="spainComp" class="hiddenDiv">
+            <p><a href="#">Ла Лига</a></p>
+            <p><a href="#">Сегунда</a></p>
+        </div>
+    </div>
+    <div>
+        <h4 id="italy">ИТАЛИЯ</h4>
+        <div id="itaComp" class="hiddenDiv">
+            <p><a href="#">Серия А</a></p>
+            <p><a href="#">Серия Б</a></p>
+        </div>
+    </div>
+</div>
+
+
+
+

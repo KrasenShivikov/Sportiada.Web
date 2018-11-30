@@ -1,0 +1,186 @@
+﻿@model CompetitionAlpineSkiWithResultsModel
+
+@{
+    ViewData["Title"] = "ById";
+}
+
+<style>
+    .margin {
+        margin:0px
+    }
+
+    .padding {
+        padding:0px
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+
+<script>
+
+    for (var i = 0; i < @Model.Results.Count; i++) {
+
+        let btnId = "#btn" + i
+
+        let number = i
+
+        $(document).ready(function () {
+            $(btnId).click(function () {
+
+                for (var i = 0; i < @Model.Results.First().Intermediates.Count; i++) {
+
+                    let textId = "#text" + number + "int" + i                  
+
+                    $(textId).toggle()
+                    
+                }  
+
+                let headId = "#head" + number + "i" + 0
+
+                $(headId).toggle()
+            });
+        });
+    }
+
+</script>
+
+
+<h2 style="text-align:center">@Model.Discipline.Name - @Model.CompetitionType.Name</h2>
+<h3 style="text-align:center">@Model.Track</h3>
+<h3 style="text-align:center">@Model.DateTime</h3>
+
+
+
+@{ 
+
+    string colNameFirstManch = string.Empty;
+    string colNameSecondManch = string.Empty;
+
+    if (Model.Results.First().Stage == "ОБЩО")
+    {
+        colNameFirstManch = "1 манш";
+        colNameSecondManch = "2 манш";
+    }
+
+
+    string slalomVisibility = Model.Discipline.Name == "СПЕЦИАЛЕН СЛАЛОМ" ||
+                              Model.Discipline.Name == "ГИГАНТСКИ СЛАЛОМ" ||
+                              Model.Discipline.Name == "АЛПИЙСКА КОМБИНАЦИЯ"
+                              ? "block" : "none";
+
+    string downhillVisibility = Model.Discipline.Name == "СПУСКАНЕ"
+        || Model.Discipline.Name == "СУПЕР-ГИГАНТСКИ СЛАЛОМ"
+        ? "block" : "none";
+
+    string fisrtBtnName = Model.Discipline.Name != "АЛПИЙСКА КОМБИНАЦИЯ" ? "Първи Манш" : "Спускане";
+    string secondBtnName = Model.Discipline.Name != "АЛПИЙСКА КОМБИНАЦИЯ" ? "Втори Манш" : "Слалом";
+
+    string results = Model.Discipline.Name == "СПУСКАНЕ" 
+                    || Model.Discipline.Name == "СУПЕР-ГИГАНТСКИ СЛАЛОМ" ? "Резултати" : $"Резултати - {@Model.Results.First().Stage}";
+}
+
+
+<div style="display:@slalomVisibility">
+    <a class="btn btn-primary" href="/alpineSki/competition/@Model.Id/ПЪРВИ МАНШ">@fisrtBtnName</a>
+    <a class="btn btn-primary" href="/alpineSki/competition/@Model.Id/ВТОРИ МАНШ">@secondBtnName</a>
+    <a class="btn btn-primary" href="/alpineSki/competition/@Model.Id/ОБЩО">Общо</a>
+</div>
+
+
+
+<h3 style="text-align:center">@results</h3>
+
+<table class="table table-hover">
+    <thaed class="table-hover">
+        <tr>
+            <th>място</th>
+            <th>
+                <div>
+                    <p class="margin">стартов</p>
+                    <p class="margin">ред</p>
+                </div>
+            </th>
+            <th>№</th>
+            <th></th>
+            <th>име</th>
+            <th>@colNameFirstManch</th>
+            <th>@colNameSecondManch</th>
+            <th>
+                <div>
+                    <p class="margin">финално</p>
+                    <p class="margin">време</p>
+                </div>        
+            </th>
+            <th>разлика</th>
+            <th style="display:@downhillVisibility">метраж</th>
+            <th></th>
+        </tr>
+    </thaed>    
+
+    <tbody>
+        @for (int i = 0; i < Model.Results.Count; i++)
+        {
+            var result = Model.Results[i];
+
+            string btnId = $"btn{i}";
+
+            string place = result.Place.ToString() == "1000" ? String.Empty : result.Place.ToString();
+            string startOrder = result.StartOrder.ToString() == "0" ? String.Empty : result.StartOrder.ToString();
+
+            <tr>
+                <td>@place</td>
+                <td>@startOrder</td>
+                <td>@result.Bib</td>
+                <td><img src="@Url.Content(@result.Skier.PicturePath)" height="40" width="35"></td>
+                <td>
+                    <div>
+                        <p class="margin"><img src="@Url.Content(@result.Skier.Country.PicturePath)" height="15" width="20"/> @result.Skier.Country.ShortName</p>
+                        <p class="margin"><a href="/alpineski/skier/@result.Skier.Id">@result.Skier.Name</a></p>
+                    </div>
+                  
+                </td>
+                <td >@result.TimeFirstManch</td>
+                <td >@result.TimeSecondManch</td>
+                <td >@result.FinalTime</td>
+                <td>@result.Difference</td>
+                <td style="display:@downhillVisibility">@result.Metters </td>
+                <td style="text-align:right"><input type="button" id=@btnId class="btn btn-primary btn-sm" value="+"></td>
+            </tr>
+
+            @for (int j = 0; j < result.Intermediates.Count; j++)
+            {
+                var control = result.Intermediates[j];
+
+                if (j == 0)
+                {
+                    string headId = $"head{i}i{j}";
+
+                    <tr id=@headId style="font-weight:bold; display:none">
+                        <td style="text-align:center" colspan="4">контроли</td>
+                        <td style="text-align:left">място</td>
+                        <td>времe</td>
+                        <td>разлика</td>
+                        <td colspan="4"></td>
+                    </tr>
+                }
+
+                string intermediatePlace = control.Place.ToString() == "0" || control.Place.ToString() == "1000" ? String.Empty : control.Place.ToString();
+
+                string id = $"text{i}int{j}";
+
+
+
+                <tr id=@id style="display:none">
+                    <td style="text-align:center" colspan="4">@control.Name</td>
+                    <td style="text-align:left">@intermediatePlace</td>
+                    <td >@control.Time</td>
+                    <td>@control.Difference</td>
+                    <td colspan="4">@control.Speed</td>
+                </tr>
+
+            }
+        }
+    </tbody>
+</table>

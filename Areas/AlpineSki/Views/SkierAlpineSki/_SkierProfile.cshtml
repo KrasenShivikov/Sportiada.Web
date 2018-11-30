@@ -1,0 +1,39 @@
+﻿@model SkierProfileModel
+
+<h2>ПРОФИЛ</h2>
+
+<style>
+    .background {
+        background-color:lightgray
+    }
+</style>
+
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <td class="background"><img src="@Url.Content(@Model.PicturePath)" height="150" width="120" /></td>
+            <td class="background">
+                <div>
+                    <p style="margin-top:25px"><img src="@Url.Content(@Model.Country.PicturePath)" height="70" width="100" /></p>
+                    <p style="font-weight:bold">@Model.Country.Name</p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Име</td>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <td>Клуб</td>
+            <td>@Model.Club</td>
+        </tr>
+        <tr>
+            <td>Рождена Дата</td>
+            <td>@Model.BirthDate.ToShortDateString()</td>
+        </tr>
+        <tr>
+            <td>Години</td>
+            <td>@Model.Age</td>
+        </tr>
+    </tbody>
+</table>

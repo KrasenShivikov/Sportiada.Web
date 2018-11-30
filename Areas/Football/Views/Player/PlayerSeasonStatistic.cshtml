@@ -1,0 +1,77 @@
+﻿@model PlayerSeasonStatisticModel
+
+@{
+    ViewData["Title"] = "PlayerSeasonStatistic";
+}
+
+<h2>ПРОФИЛ</h2>
+
+<div class="Container">
+    @Html.Partial("_PlayerProfile")
+    <div class="row">
+        <div class="col-lg-12">
+            @{ 
+                string seasonName = Model.Games.First().SeasonName;
+            }
+
+            <h1>@seasonName</h1>
+
+            @foreach (var teamGames in Model.GamesByTeam)
+            {
+                string visibility = Model.Type.Id != 1 ? "hidden" : "initial";
+
+                <h3>@teamGames.Key </h3>
+
+                <table class="table table-bordered">
+                    <thead class="table table-bordered">
+                        <tr>
+                            <th>отбор</th>
+                            <th>титуляр</th>
+                            <th>резерва</th>
+                            <th>извън групата за мача</th>
+                            <th>жълт картон</th>
+                            <th>червен картон</th>
+                            <th>голове</th>
+                            <th>автоголове</th>
+                            <th>асистенции</th>                        
+                            <th>вкарани дузпи</th>
+                            <th style="visibility:@visibility">допуснати голове</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var game in teamGames)
+                        {
+                            string lineUp = game.InLineUp == true ? "Да" : " Не ";
+                            string reserve = game.IsReserve == true ? "Да" : " Не ";
+                            string sideline = game.Sideline == true ? "Да" : " Не ";
+                            
+
+                            <tr>
+                                <td><a href="/football/game/@game.GameId"/>@game.RivalTeam</td>
+                                <td>
+                                    @lineUp <img src="@Url.Content(game.substituteOut.InIcon)" />@game.substituteOut.Minute                              
+                                </td>
+                                <td>
+                                    @reserve <img src="@Url.Content(game.SubstituteIn.InIcon)" /> @game.SubstituteIn.Minute                              
+                                </td>
+                                <td>@sideline</td>
+                                <td>@game.YellowCards</td>
+                                <td>@game.RedCard</td>
+                                <td>@game.ScoredGoals</td>
+                                <td>@game.OwnGoals</td>
+                                <td>@game.GoalAssistances</td>
+                                <td>@game.ScoredPenalties</td>
+                                <td style="visibility:@visibility">@game.AllowedGaols</td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,40 @@
+﻿<div class="row">
+    <div class="col-lg-10">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td class="background"><img src="@Url.Content(@Model.Picture)" height="150" width="120" /></td>
+                    <td class="background">
+                        <div>
+                            <p style="margin-top:25px"><img src="@Url.Content(@Model.Country.PicturePath)" height="70" width="100" /></p>
+                            <p style="font-weight:bold">@Model.Country.Name</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Име</td>
+                    <td>@Model.Name</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-2">
+        <div style="overflow:auto; height:200px">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>СЕЗОНИ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var season in Model.Seasons)
+                    {
+                        <tr>
+                            <td><a href="/football/player/@Model.Id/@season.Id" />@season.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+     </div> 
+</div>

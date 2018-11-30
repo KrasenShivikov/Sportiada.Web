@@ -1,0 +1,103 @@
+﻿@model SideTeamModel
+
+@{
+    ViewData["Title"] = "ById";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $("#firstTeam").click(function () {
+            $("#firsTeamPlayers").toggle()
+        });
+
+        $("#U23").click(function () {
+            $("#U23Players").toggle()
+        });
+
+        $("#U18").click(function () {
+            $("#U18Players").toggle()
+        });
+
+        $("#OnLoan").click(function () {
+            $("#OnLoanPlayers").toggle()
+        });
+    });
+
+</script>
+
+<h2>Състав на @Model.Team.Name за сезон @Model.Season.Name</h2>
+
+<table class="table table-hover">
+    <thead class="table-hover">
+        <tr>
+            <th><a href="#" id="firstTeam">ПЪРВИ ОТБОР</a></th>
+        </tr>
+    </thead>
+    <tbody style="display:none" id="firsTeamPlayers">
+        @foreach (var player in Model.FirstTeam)
+        {
+            <tr>
+                <td>@player.PlayerNumber</td>
+                <td><img src="@Url.Content(player.Country.PicturePath)" width="20" height="15" /> @player.Name</td>
+                <td><img src="@Url.Content(player.PlayerPicture)" width="130" height="150" /></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<table class="table table-hover">
+    <thead class="table-hover">
+        <tr>
+            <th><a href="#" id="U23">ДО 23 ГОДИНИ</a></th>
+        </tr>
+    </thead>
+    <tbody style="display:none" id="U23Players">
+        @foreach (var player in Model.Under23)
+        {
+            <tr>
+                <td>@player.PlayerNumber</td>
+                <td><img src="@Url.Content(player.Country.PicturePath)" width="20" height="15" /> @player.Name</td>
+                <td><img src="@Url.Content(player.PlayerPicture)" width="130" height="150" /></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<table class="table table-hover">
+    <thead class="table-hover">
+        <tr>
+            <th ><a href="#" id="U18">ДО 18 ГОДИНИ</a></th>
+        </tr>
+    </thead>
+    <tbody style="display:none" id="U18Players">
+        @foreach (var player in Model.Under18)
+        {
+            <tr>
+                <td>@player.PlayerNumber</td>
+                <td><img src="@Url.Content(player.Country.PicturePath)" width="20" height="15" /> @player.Name</td>
+                <td><img src="@Url.Content(player.PlayerPicture)" width="130" height="150" /></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<table class="table table-hover">
+    <thead class="table-hover">
+        <tr>
+            <th><a href="#" id="OnLoan">ПОД НАЕМ </a></th>
+        </tr>
+    </thead>
+    <tbody style="display:none" id="OnLoanPlayers">
+        @foreach (var player in Model.OnLoan)
+        {
+            <tr>
+                <td>@player.PlayerNumber</td>
+                <td><img src="@Url.Content(player.Country.PicturePath)" width="20" height="15" /> @player.Name</td>
+                <td><img src="@Url.Content(player.PlayerPicture)" width="130" height="150" /></td>
+            </tr>
+        }
+    </tbody>
+</table>

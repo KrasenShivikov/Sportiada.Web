@@ -1,0 +1,87 @@
+﻿@model IEnumerable<ResultCompetitionAlpineSkiModel>
+
+
+@{
+    ViewData["Title"] = "AllBySkierByPlaceByTournament";
+}
+
+@{ 
+    string place = @Model.First().Place == 1000 ? "НЕ ФИНИШИРА" : Model.First().Place.ToString();
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Сътезания </h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <table class="table table-bordered">
+                <tr>
+                    <td style="font-weight:bold">СЪСТЕЗАТЕЛ</td>
+                    <td>
+                        <img src="@Url.Content(Model.First().Skier.PicturePath)" height="25" width="20" />  <a href="/alpineski/skier/@Model.First().Skier.Id">@Model.First().Skier.Name</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">СТРАНА</td>
+                    <td><img src="@Url.Content(Model.First().Skier.Country.PicturePath)" heigth="15" width="20" /> @Model.First().Skier.Country.Name</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">ТУРНИР</td>
+                    <td>@Model.First().CompetitionsAlpineSki.Tournament.Name</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">ДИСЦИПЛИНА</td>
+                    <td>@Model.First().CompetitionsAlpineSki.Discipline.Name</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">КЛАСИРАНЕ</td>
+                    <td>@place</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-hover">
+                <thead class="table-hover">
+                    <tr>
+                        <th>Дата и час</th>
+                        <th>Дисциплина</th>
+                        <th>Място</th>
+                        <th>Сезон</th>
+                        <th>Турнир</th>
+                        <th>Тип</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var result in Model)
+                    {
+                        <tr>
+                            <td>@result.CompetitionsAlpineSki.DateTime</td>
+                            <td>@result.CompetitionsAlpineSki.Discipline.Name</td>
+                            <td>@result.CompetitionsAlpineSki.PlaceAlpineSki.Name</td>
+                            <td>@result.CompetitionsAlpineSki.Season.Name</td>
+                            <td>@result.CompetitionsAlpineSki.Tournament.Name</td>
+                            <td>@result.CompetitionsAlpineSki.CompetitionType.Name</td>
+                            <td><a href="/alpineSki/competition/@result.CompetitionsAlpineSki.Id/ПЪРВИ МАНШ">Резултати</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+    
+
+
+
+
+
+ 

@@ -1,0 +1,65 @@
+﻿@model SkierStandingStatisticModel
+
+@{
+    ViewData["Title"] = "SkierByIdByTournament";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-7">
+            @Html.Partial("_SkierProfile")
+        </div>
+        <div class="col-lg-5">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-7">
+            <h3>Статистика - @Model.Results.First().CompetitionsAlpineSki.Tournament.Name</h3>
+
+            <table class="table table-bordered">
+                <tbody>
+                    @foreach (var disciplines in Model.DisciplineStatistic)
+                    {
+                        foreach (var discipline in disciplines)
+                        {
+                            <tr>
+                                <td colspan="2">@discipline.Key</td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weight:bold">място</td>
+                                <td style="font-weight:bold">брой</td>
+                            </tr>
+
+                            foreach (var value in discipline.Value)
+                            {
+
+                                string place = value.Key == 1000 ? "не финишира" : value.Key.ToString();
+                                int tournamentId = Model.Results.First().CompetitionsAlpineSki.Tournament.Id;
+
+                                <tr>
+                                    <td><a href="/alpineski/result/all/@Model.Id/@value.Key/@Model.Results.First().CompetitionsAlpineSki.Tournament.Id/@discipline.Key">@place</a></td>
+                                    <td>@value.Value</td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-5">
+            @Html.Partial("_Tournaments")
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+
+    
+
