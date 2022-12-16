@@ -1,0 +1,79 @@
+﻿@model FootballCoachTeamFormModel  
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Id">ID</label>
+        <input asp-for="Id" class="form-control" />
+        <span asp-validation-for="Id" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CoachId">ID на треньор</label>
+        <input asp-for="CoachId" class="form-control" />
+        <span asp-validation-for="CoachId" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Team">Отбор</label>
+        <input asp-for="Team" class="form-control" />
+        <span asp-validation-for="Team" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TeamLogo">Емблема на отбор</label>
+        <input type="file" id="tl_file" /><input type="button" value="Добави емблема" id="tl_trigger" />
+        <input asp-for="TeamLogo" class="form-control" id="tl" />
+        <span asp-validation-for="TeamLogo" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TeamCountryFlag">Знаме на страна на отбор</label>
+        <input type="file" id="cf_file" /><input type="button" value="Добави емблема" id="cf_trigger" />
+        <input asp-for="TeamCountryFlag" class="form-control" id="cf" />
+        <span asp-validation-for="TeamCountryFlag" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FromDate">От дата</label>
+        <input asp-for="FromDate" class="form-control" type="date" />
+        <span asp-validation-for="FromDate" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="UntilDate">До дата</label>
+        <input asp-for="UntilDate" type="date" class="form-control" />
+        <span asp-validation-for="UntilDate" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Position">Пост</label>
+        <input asp-for="Position" class="form-control" />
+        <span asp-validation-for="Position" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Matches">Брой мачове</label>
+        <input asp-for="Matches" class="form-control" />
+        <span asp-validation-for="Matches" class="form-text text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Въведи" />
+    </div>
+</form>
+
+<script>
+    let teamLogosPath = '~/images/FootballTeamsLogos/';
+    let countryFlagsPath = '~/images/countries/';
+    let sliceIndex = 12;
+
+    let tl = document.getElementById('tl');
+    let tl_trigger = document.getElementById('tl_trigger');
+    let tl_file = document.getElementById('tl_file');
+    handleEventListener(tl_trigger, tl, tl_file, sliceIndex, teamLogosPath);
+
+    let cf = document.getElementById('cf');
+    let cf_trigger = document.getElementById('cf_trigger');
+    let cf_file = document.getElementById('cf_file');
+    handleEventListener(cf_trigger, cf, cf_file, sliceIndex, countryFlagsPath);
+
+    function handleEventListener(trigger, element, fileElement, index, path) {
+        trigger.addEventListener('click', () => {
+            let fileElement_Text = fileElement.value.slice(index);
+            let fullPath = path + fileElement_Text;
+            element.value = fullPath;
+        })
+    }
+</script>

@@ -1,0 +1,66 @@
+﻿@model FootballCoachViewModel
+
+@{
+    ViewData["Title"] = "FootballCoach";
+}
+
+<table class="table table-bordered">
+    <tr>
+        <td><img src="@Url.Content(Model.Picture)" height="100" width="80" /></td>
+        <td><a href="/admin/updateFootballCoach/@Model.Id">Промени</a> | <a href="/admin/deleteFootballCoach/@Model.Id">Изтрий</a></td>
+    </tr>
+    <tr>
+        <th>Пълно име</th>
+        <td>@Model.FirstName @Model.LastName</td>
+    </tr>
+    <tr>
+        <th>Съкратено име</th>
+        <td>@Model.ShortName</td>
+    </tr>
+    <tr>
+        <th>Страна</th>
+        <td><img src="@Url.Content(Model.Country.PicturePath)" height="20" width="30" />@Model.Country.Name</td>
+    </tr>
+    <tr>
+        <th>Дата на раждане</th>
+        <td>@Model.BirthDate.Day.@Model.BirthDate.Month.@Model.BirthDate.Year </td>
+    </tr>
+    <tr>
+        <th>Описание</th>
+        <td>@Model.Description</td>
+    </tr>
+</table>
+
+
+<a href="/admin/createCoachTeam/@Model.Id">Добави отбор</a>
+
+@if (Model.Teams.Any())
+{
+    <table class="table table-bordered">
+        <tr>
+            <th colspan="3">Отбори</th>
+            <th>От дата</th>
+            <th>До дата</th>
+            <th>Пост</th>
+            <th>Брой мачове</th>
+            <th></th>
+        </tr>
+
+        @foreach (var t in Model.Teams)
+        {
+            <tr>
+                <td><img src="@Url.Content(t.TeamCountryFlag)" height="20" width="30" /></td>
+                <td><img src="@Url.Content(t.TeamLogo)" height="20" width="30" /></td>
+                <td>@t.Team</td>
+                <td>@t.FromDate.Day.@t.FromDate.Month.@t.FromDate.Year</td>
+                <td>@t.UntilDate.Day.@t.UntilDate.Month.@t.UntilDate.Year</td>
+                <td>@t.Position</td>
+                <td>@t.Matches</td>
+                <td><a href="/admin/updateCoachTeam/@t.Id">Промени</a> | <a href="/admin/deleteCoachTeam/@t.Id">Изтрий</a></td>
+            </tr>
+        }
+    </table>
+}
+
+
+

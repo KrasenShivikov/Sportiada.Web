@@ -1,0 +1,15 @@
+﻿@model CountryAdminModel 
+
+@{
+    ViewData["Title"] = "DeleteCountry";
+}
+
+
+
+<h3>Наистина ли искате да изтриете:    </h3>
+
+<p>@Model.Name <img src="@Url.Content(@Model.PicturePath)" height="15" width="20" /></p>
+
+<a class="btn btn-success" href="/admin/deleteCountry" role="button">Да</a> <a class="btn btn-danger" href="/admin/countries" role="button">Не</a>
+
+

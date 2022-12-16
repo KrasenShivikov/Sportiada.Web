@@ -1,0 +1,28 @@
+﻿@model FootballGameFormModel
+
+<form method="post">
+    <div class="form-group" hidden>
+        <label asp-for="Id">ID</label>
+        <input asp-for="Id" class="form-control" />
+        <span asp-validation-for="Id" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group" hidden>
+        <label asp-for="RoundId">ID на кръг</label>
+        <input asp-for="RoundId" class="form-control" />
+        <span asp-validation-for="RoundId" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Date">Дата</label>
+        <input asp-for="Date" class="form-control"/>
+        <span asp-validation-for="Date" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Attendance">Публика</label>
+        <input asp-for="Attendance" class="form-control" />
+        <span asp-validation-for="Attendance" class="form-text text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Въведи" />
+    </div>
+</form> 

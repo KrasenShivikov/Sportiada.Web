@@ -1,0 +1,9 @@
+﻿@model FootballCardTypeAdminModel
+
+@{
+    ViewData["Title"] = "DeleteCardType";
+}
+
+<h2>Наистина ли желаете да изтриете "<span><img src="@Url.Content(Model.Picture)" height="25" width="20"/></span> @Model.Name"</h2>
+
+<a href="/admin/deleteCardType" class="btn btn-success">Да</a><a href="/admin/cardTypes" class="btn btn-danger">Не</a>

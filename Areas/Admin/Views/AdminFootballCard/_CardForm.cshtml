@@ -1,0 +1,110 @@
+﻿@model FootballCardFormModel
+
+<div class="container">
+    <dvi class="row">
+        <div class="col-lg-3">
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="PlayerId">ID на футболиста</label>
+                    <input asp-for="PlayerId" class="form-control" id="inputId" />
+                    <span asp-validation-for="Id" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group" hidden>
+                    <label asp-for="GameStatisticId">ID на статистиката</label>
+                    <input asp-for="GameStatisticId" class="form-control" />
+                    <span asp-validation-for="GameStatisticId" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Minute">Минута</label>
+                    <input asp-for="Minute" class="form-control" />
+                    <span asp-validation-for="Minute" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FirstHalf">През първо полувреме?</label>
+                    <input asp-for="FirstHalf" class="form-control" />
+                    <span asp-validation-for="FirstHalf" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TypeId">Видове картони</label>
+                    <select asp-items="Model.CardTypes" asp-for="TypeId">Голове</select>
+                    <span asp-validation-for="TypeId" class="form-text text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Въведи" />
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-9">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Страна</th>
+                        <th>Номер</th>
+                        <th>Страна</th>
+                        <th>ID на футболист</th>
+                        <th colspan="2">Позиция</th>
+                    </tr>
+                </thead>
+                <tbody id="players">
+                    @foreach (var p in Model.Players)
+                    {
+                        <tr>
+                            <td><img src="@Url.Content(p.Country)" height="20" width="30"/></td>
+                            <td>@p.Number</td>
+                            <td> <img src="@Url.Content(p.Picture)" height="30" width="20" /> @p.Player.FirstName @p.Player.LastName</td>
+                            <td>@p.Position</td>
+                            <td>@p.PlayerId</td>
+                            <td><button class="btnIds">Добави ID</button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </dvi>
+</div>
+<script>
+    const body = document.getElementById('players');
+    const players = Array.from(document.getElementById('players').children);
+
+
+    const gk = createArrByPositionPlayer('вратар');
+    const def = createArrByPositionPlayer('^защитник');
+    const half = createArrByPositionPlayer('^полузащитник');
+    const f = createArrByPositionPlayer('нападател');
+
+    const sortedPlayers = gk.concat(def, half, f);
+
+    players.forEach(e => {
+        body.removeChild(e);
+    });
+
+    sortedPlayers.forEach(e => {
+        body.appendChild(e)
+    });
+
+    const inputId = document.getElementById('inputId');
+    const btnIds = Array.from(document.getElementsByClassName('btnIds'));
+
+    btnIds.forEach(e => {
+        e.addEventListener('click', () => {
+            const playerId = e.parentElement.previousElementSibling.textContent;
+            inputId.value = playerId;
+        });
+    });
+
+    function createArrByPositionPlayer(regex) {
+        const arr = [];
+
+        players.forEach(e => {
+            const searchStr = e.children[3].textContent;
+            const isTrue = new RegExp(regex).test(searchStr)
+            if (isTrue) {
+                arr.push(e)
+            }
+        })
+        arr.sort((a, b) => parseInt(a.children[1].textContent) - parseInt(b.children[1].textContent));
+        return arr;
+    }
+
+</script>

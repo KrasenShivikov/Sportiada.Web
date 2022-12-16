@@ -1,0 +1,10 @@
+﻿@model FootballCoachDeleteModel
+
+@{
+    ViewData["Title"] = "DeleteFootballCoach";
+}
+
+<h2>Наистина ли искате да изтриете "<img src="@Url.Content(Model.CountryPicture)" height="20" width="30"/> @Model.Name"</h2>
+
+<a href="/admin/deleteFootballCoach" class="btn btn-success">Да</a><a href="/admin/footballCoach/@Model.Id" class="btn btn-danger">Не</a>
+

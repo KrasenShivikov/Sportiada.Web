@@ -1,0 +1,24 @@
+﻿@model FootballCardTypeViewModel
+
+<form id="form" method="post">
+    <div class="form-group" hidden>
+        <label asp-for="Id">Id</label>
+        <input asp-for="Id" class="form-control" />
+        <span asp-validation-for="Id" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name">Име</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Picture">Иконка</label>
+        <input type="file" id="i_file" /><input type="button" value="Добави иконка" id="i_trigger" />
+        <input asp-for="Picture" class="form-control" id="i" />
+        <span asp-validation-for="Picture" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Въведи" />
+    </div>
+</form>
+<script src="~/js/InsertIcon.js"></script>

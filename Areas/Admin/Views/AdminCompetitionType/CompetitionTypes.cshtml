@@ -1,0 +1,26 @@
+﻿@model IEnumerable<CompetitionTypeAdminModel>
+
+@{
+    ViewData["Title"] = "CompetitionTypes";
+}
+
+<h2>Типове състезания</h2>
+<a href="/admin">Към начална страница</a>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Тип</th>
+            <th><a href="/admin/createCompetitionType" class="btn btn-primary">Добави тип</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var type in Model)
+        {
+            <tr>
+                <td>@type.Name</td>
+                <td><a href="/admin/updateCompetitionType/@type.Id">Промени</a> | <a href="/admin/deleteCompetitionType/@type.Id">Изтрий</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

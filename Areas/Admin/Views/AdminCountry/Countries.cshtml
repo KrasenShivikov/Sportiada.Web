@@ -1,0 +1,37 @@
+﻿@model IEnumerable<CountryAdminModel>
+
+<h2>Страни</h2>
+<a href="/admin">Към начална страница</a>
+<form id="form">
+    <div class="form-group">
+        <input type="text" id="search">
+        <input type="button" value="Търси" id="btn" />
+        <input type="submit" value="Всички">
+    </div>
+</form>
+<div class="container">
+    <div class="row">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Име</th>
+                        <th>Абревиатура</th>
+                        <th>Знаме</th>
+                        <th><a class="btn btn-primary" href="/admin/createCountry">Създай страна</a></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    @foreach (var country in Model)
+                    {
+                        <tr>
+                            <td>@country.Name</td>
+                            <td>@country.ShortName</td>
+                            <td><img src="@Url.Content(country.PicturePath)" height="15" width="20"/></td>
+                            <td><a href="/admin/updateCountry/@country.Id">Промени</a> | <a href="/admin/deleteCountry/@country.Id">Изтрий</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </div>
+</div>
+<script src="~/js/Search.js"></script>

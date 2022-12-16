@@ -1,0 +1,35 @@
+﻿@model IEnumerable<CityAdminModel>
+
+<h2>Градове</h2>
+<a href="/admin">Към начална страница</a>
+<form id="form">
+    <div class="form-group">
+        <input type="text" id="search">
+        <input type="button" value="Търси" id="btn" />
+        <input type="submit" value="Всички">
+    </div>
+</form>
+<div class="container">
+    <div class="row">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Име</th>
+                    <th>Страна</th>
+                    <th><a class="btn btn-primary" href="/admin/createCity">Създай град</a></th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                @foreach (var city in Model)
+                {
+                    <tr>
+                        <td>@city.Name</td>
+                        <td>@city.Country.Name <img src="@Url.Content(city.Country.PicturePath)" height="15" width="20" /></td>
+                        <td><a href="/admin/updateCity/@city.Id">Промени</a> | <a href="/admin/deleteCity/@city.Id">Изтрий</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="~/js/Search.js"></script>

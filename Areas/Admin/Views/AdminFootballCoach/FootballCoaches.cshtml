@@ -1,0 +1,42 @@
+﻿@model IEnumerable<FootballCoachListModel>
+
+@{
+    ViewData["Title"] = "FootballCoaches";
+}
+
+<h2>Треньори</h2>
+<a href="/admin">Към начална страница</a>
+<form id="form">
+    <div class="form-group">
+        <input type="text" id="search">
+        <input type="button" value="Търси" id="btn" />
+        <input type="submit" value="Всички">
+    </div>
+</form>
+@if (Model != null)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Име</th>
+                <th>Съкратено име</th>
+                <th>Страна</th>
+                <th><a class="btn btn-primary" href="/admin/createFootballCoach">Създай треньор</a></th>
+            </tr>
+        </thead>
+        
+        <tbody id="tbody">
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td><img src="@Url.Content(c.Picture)" height="30" width="20" /> <a href="/admin/footballCoach/@c.Id">@c.FirstName @c.LastName</a></td>
+                    <td>@c.ShortName</td>
+                    <td><img src="@Url.Content(c.CountryPicture)" height="20" width="30" /> @c.CountryName</td>
+                    <td><a href="/admin/updateFootballCoach/@c.Id">Промени</a> | <a href="/admin/deleteFootballcoach/@c.Id">Изтрий</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<script src="~/js/Search.js"></script>
+

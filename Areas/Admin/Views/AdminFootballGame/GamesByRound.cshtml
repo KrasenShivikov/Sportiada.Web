@@ -1,0 +1,23 @@
+﻿@model IEnumerable<FootballGameListAdminModel>
+
+@{
+    ViewData["Title"] = "GamesByRoundId";
+}
+
+<h2>Футболни срещи</h2>
+
+<a href="/admin/createFootballGame">Добави среща</a>
+<table class="table table-hover">
+    @if (Model.Any())
+    {
+        foreach (var game in Model)
+        {
+            <tr>
+                <td><a href="/admin/footballGame/@game.Id">@game.Date (@game.Attendance души)</a></td>
+                <td><a href="/admin/updateFootballGame/@game.Id">Промени</a> | <a href="/admin/deleteFootballGame/@game.Id">Изтрий</a></td>
+            </tr>
+        }
+    }
+
+</table>
+

@@ -1,0 +1,19 @@
+﻿@model FootballGameFormModel
+
+@{
+    ViewData["Title"] = "DeleteFootballCompetition";
+}
+
+<h2>Наистина ли желаете да изтриете</h2>
+<table class="table table-bordered">
+    <tr>
+        <th>Дата</th>
+        <td>@Model.Date</td>
+    </tr>
+    <tr>
+        <th>Публика</th>
+        <td>@Model.Attendance</td>
+    </tr>
+</table>
+
+<a href="/admin/deleteFootballGame" class="btn btn-success">Да</a><a href="/admin/footballGamesByRound/@Model.RoundId" class="btn btn-danger">Не</a>

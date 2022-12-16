@@ -1,0 +1,29 @@
+﻿@model IEnumerable<FootballCardTypeAdminModel>
+
+@{
+    ViewData["Title"] = "CardTypes";
+}
+
+<h2>Видове картони</h2>
+<a href="/admin">Към начална страница</a>
+
+<table class="table table-hover">
+
+    <tr>
+        <th>Картон</th>
+        <th><a href="/admin/createCardType" class="btn btn-primary">Добави</a></th>
+    </tr>
+    @if (Model.Any())
+    {
+
+        foreach (var t in Model)
+        {
+
+            <tr>
+                <td><img src="@Url.Content(t.Picture)" height="20" width="15" /> @t.Name</td>
+                <td><a href="/admin/updateCardType/@t.Id">Промени</a> | <a href="/admin/deleteCardType/@t.Id">Изтрий</a></td>
+            </tr>
+        }
+    }
+</table>
+

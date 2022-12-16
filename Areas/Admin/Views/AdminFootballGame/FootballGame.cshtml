@@ -1,0 +1,562 @@
+﻿@model FootballGameAdminModel
+
+@{
+    ViewData["Title"] = "FootballGame";
+}
+
+<h2>@Model.Date (@Model.Attendance души)</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>Рефери</h4>
+            @if (Model.Referees.Any())
+            {
+                <a href="/admin/createGameReferee/@Model.Id">Добави рефер</a>
+                <table class="table table-bordered">
+                    @foreach (var r in Model.Referees)
+                    {
+                        <tr>
+                            <td style="text-align:right"><img src="@Url.Content(r.Referee.Country.PicturePath)" height="20" width="30" /></td>
+                            <td><img src="@Url.Content(r.Referee.Picture)" height="30" width="25"/> @r.Referee.Name</td>
+                            <td>@r.Type.Name</td>
+                            <td><a href="/admin/updateGameReferee/@r.Id">Промени</a> | <a href="/admin/deleteGameReferee/@r.Id">Изтрий</a></td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <a href="/admin/createGameReferee/@Model.Id">Добави рефер</a>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <a href="/admin/createGameStatistic/@Model.Id">Добави статистика на домакин</a>
+            @if (Model.GameStatistics.Where(gs => gs.TypeId == 1).Any())
+            {
+                var statistic = Model.GameStatistics.Where(gs => gs.TypeId == 1).FirstOrDefault();
+                <h4>@statistic.Squad.Team.Name</h4>
+                <div>
+                    <a href="/admin/updateGameStatistic/@statistic.Id">Промени</a> | <a href="/admin/deleteGameStatistic/@statistic.Id">Изтрий</a>
+                </div>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Притежание на топката</th>
+                        <td>@statistic.BallPossession %</td>
+                    </tr>
+                    <tr>
+                        <th>Нарушения</th>
+                        <td>@statistic.Fouls</td>
+                    </tr>
+                    <tr>
+                        <th>Корнери</th>
+                        <td>@statistic.Corners</td>
+                    </tr>
+                    <tr>
+                        <th>Засади</th>
+                        <td>@statistic.Offsides</td>
+                    </tr>
+                    <tr>
+                        <th>Удари във вратата</th>
+                        <td>@statistic.ShotsOnTarget</td>
+                    </tr>
+                    <tr>
+                        <th>Удари извън вратата</th>
+                        <td>@statistic.ShotsWide</td>
+                    </tr>
+                </table>
+
+                <h4>Начален състав</h4>
+                @if (statistic.LineUps.Any())
+                {
+                    <a href="/admin/createLineUp/@statistic.SquadId/@statistic.Id/@Model.Id">Добави футболист</a>
+                    <div>
+                        <table class="table table-bordered">
+                            @foreach (var l in statistic.LineUps)
+                            {
+                                <tr>
+                                    <td style="text-align:right">@l.Player.Number</td>
+                                    <td><img src="@Url.Content(l.Player.Country)" height="20" width="30" /></td>
+                                    <td><img src="@Url.Content(l.Player.Picture)" height="30" width="20" /></td>
+                                    <td>@l.Player.ProfileName</td>
+                                    <td><a href="/admin/updateLineUp/@l.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteLineUp/@l.Id/@Model.Id">Изтрий</a></td>
+                                </tr>
+                            }
+
+                            @if (statistic.Coaches.Any())
+                            {
+                                @foreach (var c in statistic.Coaches)
+                                {
+                                    <tr>
+                                        <td style="text-align:right"><strong>Треньор</strong></td>
+                                        <td><img src="@Url.Content(c.Coach.CountryPicture)" height="20" width="30" /></td>
+                                        <td><img src="@Url.Content(c.Coach.Picture)" height="30" width="20" /></td>
+                                        <td>@c.Coach.ShortName</td>
+                                        <td><a href="/admin/updateGameStatisticCoach/@c.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteGameStatisticCoach/@c.Id/@Model.Id">Изтрий</a></td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td><a href="/admin/createGameStatisticCoach/@statistic.SquadId/@statistic.Id/@Model.Id">Добави треньор</a></td>
+                                </tr>
+                            }
+
+
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <a href="/admin/createLineUp/@statistic.SquadId/@statistic.Id/@Model.Id">Добави футболист</a>
+                }
+
+                <h4>Резерви</h4>
+                @if (statistic.Reserves.Any())
+                {
+                    <a href="/admin/createReserve/@statistic.SquadId/@statistic.Id/@Model.Id">Добави футболист</a>
+                    <div>
+
+                        <table class="table table-bordered">
+                            @foreach (var r in statistic.Reserves)
+                            {
+                                <tr>
+                                    <td>@r.Player.Number</td>
+                                    <td><img src="@Url.Content(r.Player.Country)" height="20" width="30" /></td>
+                                    <td><img src="@Url.Content(r.Player.Picture)" height="30" width="20" /></td>
+                                    <td>@r.Player.ProfileName</td>
+                                    <td><a href="/admin/updateReserve/@r.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteReserve/@r.Id/@Model.Id">Изтрий</a></td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <a href="/admin/createReserve/@statistic.SquadId/@statistic.Id/@Model.Id">Добави футболист</a>
+                }
+
+                <h4>Смени</h4>
+                @if (statistic.Substitutes.Any())
+                {
+                    <a href="/admin/createSubstitute/@statistic.Id/@Model.Id">Добави смяна</a>
+                    <div>
+
+                        @foreach (var s in statistic.Substitutes)
+                        {
+                            string firstHalf = s.FirstHalf ? "първо полувреме" : "второ полувреме";
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>@s.Minute' - @firstHalf</th>
+                                    <td><a href="/admin/updateSubstitute/@s.Id/@statistic.Id/@Model.Id">Промени</a> | <a href="/admin/deleteSubstitute/@s.Id/@Model.Id">Изтрий</a></td>
+                                </tr>
+
+                                @if (s.PlayerOut == null)
+                                {
+                                    <tr>
+                                        <td><a href="/admin/createPlayerOut/@s.Id/@statistic.SquadId/@Model.Id">Добави напускащ футболист</a></td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td><img src="@Url.Content(s.PlayerOut.OutIcon)" /></td>
+                                        <td><img src="@Url.Content(s.PlayerOut.Player.Country)" height="20" width="30" /></td>
+                                        <td><img src="@Url.Content(s.PlayerOut.Player.Picture)" height="30" width="20" /></td>
+                                        <td>@s.PlayerOut.Player.ProfileName</td>
+                                        <td><a href="/admin/updatePlayerOut/@s.PlayerOut.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deletePlayerOut/@s.PlayerOut.Id/@Model.Id">Изтрий</a></td>
+                                    </tr>
+                                }
+
+                                @if (s.PlayerIn == null)
+                                {
+                                    <tr>
+                                        <td><a href="/admin/createPlayerIn/@s.Id/@statistic.SquadId/@Model.Id">Добави влизащ футболист</a></td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td><img src="@Url.Content(s.PlayerIn.InIcon)" /></td>
+                                        <td><img src="@Url.Content(s.PlayerIn.Player.Country)" height="20" width="30" /></td>
+                                        <td><img src="@Url.Content(s.PlayerIn.Player.Picture)" height="30" width="20" /></td>
+                                        <td>@s.PlayerIn.Player.ProfileName</td>
+                                        <td><a href="/admin/updatePlayerIn/@s.PlayerIn.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deletePlayerIn/@s.PlayerIn.Id/@Model.Id">Изтрий</a></td>
+                                    </tr>
+                                }
+
+                            </table>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <a href="/admin/createSubstitute/@statistic.Id/@Model.Id">Добави смяна</a>
+                }
+
+                <h4>Извън състава</h4>
+                @if (statistic.Sidelines.Any())
+                {
+                    <a href="/admin/createSideline/@statistic.SquadId/@statistic.Id/@Model.Id">Добави футболист</a>
+                    <div>
+
+                        <table class="table table-bordered">
+                            @foreach (var s in statistic.Sidelines)
+                            {
+                                <tr>
+                                    <td>@s.Player.Number</td>
+                                    <td><img src="@Url.Content(s.Player.Country)" height="20" width="30" /></td>
+                                    <td><img src="@Url.Content(s.Player.Picture)" height="30" width="20" /></td>
+                                    <td>@s.Player.ProfileName</td>
+                                    <td><img src="@Url.Content(s.Reason.Picture)" height="20" width="20" /> @s.Reason.Name</td>
+                                    <td><a href="/admin/updateSideline/@s.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteSideline/@s.Id/@Model.Id">Изтрий</a></td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <a href="/admin/createSideline/@statistic.SquadId/@statistic.Id/@Model.Id">Добави футболист</a>
+                }
+
+                <h4>Картони</h4>
+                @if (statistic.Cards.Any())
+                {
+                    <a href="/admin/createCard/@statistic.SquadId/@statistic.Id/@Model.Id">Добави картон</a>
+                    <div>
+
+                        <table class="table table-bordered">
+                            @foreach (var c in statistic.Cards)
+                            {
+                                string firstHalf = c.FirstHalf ? "първо полувреме" : "второ полувреме";
+
+                                <tr>
+                                    <td><img src="@Url.Content(c.Type.Picture)" height="20" width="20" /></td>
+                                    <td>@c.Minute' - @firstHalf</td>
+                                    <td>@c.Player.Number</td>
+                                    <td><img src="@Url.Content(c.Player.Country)" height="20" width="30" /></td>
+                                    <td><img src="@Url.Content(c.Player.Picture)" height="30" width="20" /></td>
+                                    <td>@c.Player.ProfileName</td>
+                                    <td><a href="/admin/updateCard/@c.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteCard/@c.Id/@Model.Id">Изтрий</a></td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <a href="/admin/createCard/@statistic.SquadId/@statistic.Id/@Model.Id">Добави картон</a>
+                }
+
+                <h4>Голове</h4>
+                @if (statistic.Goals == null)
+                {
+                    <a href="/admin/createGoal/@statistic.SquadId/@statistic.Id/@Model.Id">Добави гол</a>
+                }
+                else
+                {
+                    <a href="/admin/createGoal/@statistic.SquadId/@statistic.Id/@Model.Id">Добави гол</a>
+                    <div>
+                        <table class="table table-bordered">
+                            @foreach (var g in statistic.Goals)
+                            {
+
+                                string firstHalf = g.FirstHalf ? "първо полувреме" : "второ полувреме";
+
+                                <tr>
+                                    <td>(<img src="@Url.Content(g.Type.Picture)" />) @g.Minute' - @firstHalf</td>
+                                    <td><img src="@Url.Content(g.Player.Country)" height="20" width="30" /></td>
+                                    <td><img src="@Url.Content(g.Player.Picture)" height="30" width="20" /></td>
+                                    <td>(@g.Player.Number) @g.Player.ProfileName</td>
+                                    <td><a href="/admin/updateGoal/@g.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteGoal/@g.Id/@Model.Id">Изтрий</a></td>
+                                </tr>
+                                <tr>
+                                    @if (g.Assistance == null)
+                                    {
+                                        <td><a href="/admin/createGoalAssistance/@g.Id/@statistic.SquadId/@Model.Id">Добави асистенция</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td>аситенция от</td>
+                                        <td><img src="@Url.Content(g.Assistance.Player.Country)" height="20" width="30" /></td>
+                                        <td><img src="@Url.Content(g.Assistance.Player.Picture)" height="30" width="20" /></td>
+                                        <td>(@g.Assistance.Player.Number) @g.Assistance.Player.ProfileName</td>
+                                        <td><a href="/admin/updateGoalAssistance/@g.Assistance.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteGoalAssistance/@g.Assistance.Id/@Model.Id">Изтрий</a></td>
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                }
+            }
+        </div>
+        <div class="col-lg-6">
+            <a href="/admin/createGameStatistic/@Model.Id">Добави статистика на гост</a>
+            @if (Model.GameStatistics.Where(gs => gs.TypeId == 2).Any())
+            {
+                var statistic = Model.GameStatistics.Where(gs => gs.TypeId == 2).FirstOrDefault();
+                <h4>@statistic.Squad.Team.Name</h4>
+                <div>
+                    <a href="/admin/updateGameStatistic/@statistic.Id">Промени</a> | <a href="/admin/deleteGameStatistic/@statistic.Id">Изтрий</a>
+                </div>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Притежание на топката</th>
+                        <td>@statistic.BallPossession %</td>
+                    </tr>
+                    <tr>
+                        <th>Нарушения</th>
+                        <td>@statistic.Fouls</td>
+                    </tr>
+                    <tr>
+                        <th>Корнери</th>
+                        <td>@statistic.Corners</td>
+                    </tr>
+                    <tr>
+                        <th>Засади</th>
+                        <td>@statistic.Offsides</td>
+                    </tr>
+                    <tr>
+                        <th>Удари във вратата</th>
+                        <td>@statistic.ShotsOnTarget</td>
+                    </tr>
+                    <tr>
+                        <th>Удари извън вратата</th>
+                        <td>@statistic.ShotsWide</td>
+                    </tr>
+                </table>
+
+                <h4>Начален състав</h4>
+                @if (statistic.LineUps.Any())
+                {
+                    <a href="/admin/createLineUp/@statistic.SquadId/@statistic.Id/@Model.Id">Добави футболист</a>
+                    <div>
+                        <table class="table table-bordered">
+                            @foreach (var l in statistic.LineUps)
+                            {
+                                <tr>
+                                    <td style="text-align: right">@l.Player.Number</td>
+                                    <td><img src="@Url.Content(l.Player.Country)" height="20" width="30" /></td>
+                                    <td><img src="@Url.Content(l.Player.Picture)" height="30" width="20" /></td>
+                                    <td>@l.Player.ProfileName</td>
+                                    <td><a href="/admin/updateLineUp/@l.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteLineUp/@l.Id/@Model.Id">Изтрий</a></td>
+                                </tr>
+                            }
+                            @if (statistic.Coaches.Any())
+                            {
+                                @foreach (var c in statistic.Coaches)
+                                {
+                                    <tr>
+                                        <td style="text-align:right"><strong>Треньор</strong></td>
+                                        <td><img src="@Url.Content(c.Coach.CountryPicture)" height="20" width="30" /></td>
+                                        <td><img src="@Url.Content(c.Coach.Picture)" height="30" width="20" /></td>
+                                        <td>@c.Coach.ShortName</td>
+                                        <td><a href="/admin/updateGameStatisticCoach/@c.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteGameStatisticCoach/@c.Id/@Model.Id">Изтрий</a></td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td><a href="/admin/createGameStatisticCoach/@statistic.SquadId/@statistic.Id/@Model.Id">Добави треньор</a></td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <a href="/admin/createLineUp/@statistic.SquadId/@statistic.Id/@Model.Id">Добави футболист</a>
+                }
+
+                <h4>Резерви</h4>
+                @if (statistic.Reserves.Any())
+                {
+                    <a href="/admin/createReserve/@statistic.SquadId/@statistic.Id/@Model.Id">Добави футболист</a>
+                    <div>
+
+                        <table class="table table-bordered">
+                            @foreach (var r in statistic.Reserves)
+                            {
+                                <tr>
+                                    <td>@r.Player.Number</td>
+                                    <td><img src="@Url.Content(r.Player.Country)" height="20" width="30" /></td>
+                                    <td><img src="@Url.Content(r.Player.Picture)" height="30" width="20" /></td>
+                                    <td>@r.Player.ProfileName</td>
+                                    <td><a href="/admin/updateReserve/@r.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteReserve/@r.Id/@Model.Id">Изтрий</a></td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <a href="/admin/createReserve/@statistic.SquadId/@statistic.Id/@Model.Id">Добави футболист</a>
+                }
+
+                <h4>Смени</h4>
+                @if (statistic.Substitutes.Any())
+                {
+                    <a href="/admin/createSubstitute/@statistic.Id/@Model.Id">Добави смяна</a>
+                    <div>
+
+                        @foreach (var s in statistic.Substitutes)
+                        {
+                            string firstHalf = s.FirstHalf ? "първо полувреме" : "второ полувреме";
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>@s.Minute' - @firstHalf</th>
+                                    <td><a href="/admin/updateSubstitute/@s.Id/@statistic.Id/@Model.Id">Промени</a> | <a href="/admin/deleteSubstitute/@s.Id/@Model.Id">Изтрий</a></td>
+                                </tr>
+
+                                @if (s.PlayerOut == null)
+                                {
+                                    <tr>
+                                        <td><a href="/admin/createPlayerOut/@s.Id/@statistic.SquadId/@Model.Id">Добави напускащ футболист</a></td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td><img src="@Url.Content(s.PlayerOut.OutIcon)" /></td>
+                                        <td><img src="@Url.Content(s.PlayerOut.Player.Country)" height="20" width="30" /></td>
+                                        <td><img src="@Url.Content(s.PlayerOut.Player.Picture)" height="30" width="20" /></td>
+                                        <td>@s.PlayerOut.Player.ProfileName</td>
+                                        <td><a href="/admin/updatePlayerOut/@s.PlayerOut.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deletePlayerIn/@s.PlayerOut.Id/@Model.Id">Изтрий</a></td>
+                                    </tr>
+                                }
+
+                                @if (s.PlayerIn == null)
+                                {
+                                    <tr>
+                                        <td><a href="/admin/createPlayerIn/@s.Id/@statistic.SquadId/@Model.Id">Добави влизащ футболист</a></td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td><img src="@Url.Content(s.PlayerIn.InIcon)" /></td>
+                                        <td><img src="@Url.Content(s.PlayerIn.Player.Country)" height="20" width="30" /></td>
+                                        <td><img src="@Url.Content(s.PlayerIn.Player.Picture)" height="30" width="20" /></td>
+                                        <td>@s.PlayerIn.Player.ProfileName</td>
+                                        <td><a href="/admin/updatePlayerIn/@s.PlayerIn.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deletePlayerIn/@s.PlayerIn.Id/@Model.Id">Изтрий</a></td>
+                                    </tr>
+                                }
+
+                            </table>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <a href="/admin/createSubstitute/@statistic.Id/@Model.Id">Добави смяна</a>
+                }
+
+                <h4>Извън състава</h4>
+                @if (statistic.Sidelines.Any())
+                {
+                    <a href="/admin/createSideline/@statistic.SquadId/@statistic.Id/@Model.Id">Добави футболист</a>
+                    <div>
+
+                        <table class="table table-bordered">
+                            @foreach (var s in statistic.Sidelines)
+                            {
+                                <tr>
+                                    <td>@s.Player.Number</td>
+                                    <td><img src="@Url.Content(s.Player.Country)" height="20" width="30" /></td>
+                                    <td><img src="@Url.Content(s.Player.Picture)" height="30" width="20" /></td>
+                                    <td>@s.Player.ProfileName</td>
+                                    <td><img src="@Url.Content(s.Reason.Picture)" height="20" width="20" /> @s.Reason.Name</td>
+                                    <td><a href="/admin/updateSideline/@s.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteSideline/@s.Id/@Model.Id">Изтрий</a></td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <a href="/admin/createSideline/@statistic.SquadId/@statistic.Id/@Model.Id">Добави футболист</a>
+                }
+
+                <h4>Картони</h4>
+                @if (statistic.Cards.Any())
+                {
+                    <a href="/admin/createCard/@statistic.SquadId/@statistic.Id/@Model.Id">Добави картон</a>
+                    <div>
+
+                        <table class="table table-bordered">
+                            @foreach (var c in statistic.Cards)
+                            {
+                                string firstHalf = c.FirstHalf ? "първо полувреме" : "второ полувреме";
+
+                                <tr>
+                                    <td><img src="@Url.Content(c.Type.Picture)" height="20" width="20" /></td>
+                                    <td>@c.Minute' - @firstHalf</td>
+                                    <td>@c.Player.Number</td>
+                                    <td><img src="@Url.Content(c.Player.Country)" height="20" width="30" /></td>
+                                    <td><img src="@Url.Content(c.Player.Picture)" height="30" width="20" /></td>
+                                    <td>@c.Player.ProfileName</td>
+                                    <td><a href="/admin/updateCard/@c.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteCard/@c.Id/@Model.Id">Изтрий</a></td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <a href="/admin/createCard/@statistic.SquadId/@statistic.Id/@Model.Id">Добави картон</a>
+                }
+
+                <h4>Голове</h4>
+                @if (statistic.Goals == null)
+                {
+                    <a href="/admin/createGoal/@statistic.SquadId/@statistic.Id/@Model.Id">Добави гол</a>
+                }
+                else
+                {
+                    <a href="/admin/createGoal/@statistic.SquadId/@statistic.Id/@Model.Id">Добави гол</a>
+                    <div>
+                        <table class="table table-bordered">
+                            @foreach (var g in statistic.Goals)
+                            {
+
+                                string firstHalf = g.FirstHalf ? "първо полувреме" : "второ полувреме";
+
+                                <tr>
+                                    <td>(<img src="@Url.Content(g.Type.Picture)" />) @g.Minute' - @firstHalf</td>
+                                    <td><img src="@Url.Content(g.Player.Country)" height="20" width="30" /></td>
+                                    <td><img src="@Url.Content(g.Player.Picture)" height="30" width="20" /></td>
+                                    <td>(@g.Player.Number) @g.Player.ProfileName</td>
+                                    <td><a href="/admin/updateGoal/@g.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteGoal/@g.Id/@Model.Id">Изтрий</a></td>
+                                </tr>
+                                <tr>
+                                    @if (g.Assistance == null)
+                                    {
+                                        <td><a href="/admin/createGoalAssistance/@g.Id/@statistic.SquadId/@Model.Id">Добави асистенция</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td>аситенция от</td>
+                                        <td><img src="@Url.Content(g.Assistance.Player.Country)" height="20" width="30" /></td>
+                                        <td><img src="@Url.Content(g.Assistance.Player.Picture)" height="30" width="20" /></td>
+                                        <td>(@g.Assistance.Player.Number) @g.Assistance.Player.ProfileName</td>
+                                        <td><a href="/admin/updateGoalAssistance/@g.Assistance.Id/@statistic.SquadId/@Model.Id">Промени</a> | <a href="/admin/deleteGoalAssistance/@g.Assistance.Id/@Model.Id">Изтрий</a></td>
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+

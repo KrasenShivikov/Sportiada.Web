@@ -1,0 +1,22 @@
+﻿@model FootballCompetitionAdminViewModel
+
+<form id="form" method="post">
+    <div class="form-group">
+        <label asp-for="TournamentId">TournamentId</label>
+        <input asp-for="TournamentId" class="form-control" />
+        <span asp-validation-for="TournamentId" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SeasonId">Сезони</label>
+        <select asp-for="SeasonId" asp-items="Model.Seasons" class="form-control"></select>
+        <span asp-validation-for="SeasonId" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TypeId">Типове състезания</label>
+        <select asp-for="TypeId" asp-items="Model.Types" class="form-control"></select>
+        <span asp-validation-for="TypeId" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Въведи" />
+    </div>
+</form>
