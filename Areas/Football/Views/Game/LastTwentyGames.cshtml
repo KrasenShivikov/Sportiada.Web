@@ -1,0 +1,35 @@
+﻿@model IEnumerable<GameModel>
+
+@{
+    ViewData["Title"] = "Мачове";
+}
+
+<h2>Последни 20 срещи</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2">
+            @Html.Partial("_CompetitionsByCountry")
+        </div>
+        <div class="col-lg-10">
+            
+            <table class="table table-hover">
+                <tbody>
+                    @foreach (var game in Model)
+                    {
+                        <tr>
+                            <td>@game.Date.ToShortDateString()</td>
+                            <td style="text-align:end">@game.Statistics.Where(gs => gs.Type.id == 1).First().Squad.Team.Name</td>
+                            <td style="text-align:center"><a href="/football/game/@game.Id">@game.HostGoals - @game.GuestGoals</a></td>
+                            <td>@game.Statistics.Where(gs => gs.Type.id == 2).First().Squad.Team.Name</td>
+                            <td>@game.Season</td>
+                            <td>@game.Tournament</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
