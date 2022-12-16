@@ -1,0 +1,9 @@
+﻿@model FootballRoundAdminModel
+
+@{
+    ViewData["Title"] = "DeleteFootballRound";
+}
+
+<h2>Наистина ли желаете да изтриете "@Model.Name"</h2>
+
+<a href="/admin/deleteFootballRound" class="btn btn-success">Да</a><a href="/admin/roundsByCompetition/@Model.CompetitionId" class="btn btn-danger">Не</a>

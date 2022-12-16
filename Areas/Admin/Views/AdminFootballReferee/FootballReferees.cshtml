@@ -1,0 +1,36 @@
+﻿@model IEnumerable<FootballRefereeAdminModel>
+
+@{
+    ViewData["Title"] = "FootballReferees";
+}
+
+<h2>Рефери</h2>
+<a href="/admin">Към начална страница</a>
+<form id="form">
+    <div class="form-group">
+        <input type="text" id="search">
+        <input type="button" value="Търси" id="btn" />
+        <input type="submit" value="Всички">
+    </div>
+</form>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Име</th>
+            <th>Страна</th>
+            <th><a href="/admin/createFootballReferee" class="btn btn-primary">Създай рефер</a></th>
+        </tr>
+    </thead>
+    <tbody id="tbody">
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td><img src="@Url.Content(r.Picture)" height="30" width="25"/> @r.Name</td>
+                <td><img src="@Url.Content(r.Country.PicturePath)" height="15" width="20" /> @r.Country.Name</td>
+                <td><a href="/admin/updateFootballReferee/@r.Id">Промени</a> | <a href="/admin/deleteFootballReferee/@r.Id">Изтрий</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script src="~/js/Search.js"></script>
+

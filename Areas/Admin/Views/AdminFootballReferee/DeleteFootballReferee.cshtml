@@ -1,0 +1,15 @@
+﻿@model FootballRefereeAdminModel
+
+@{
+    ViewData["Title"] = "DeleteFootballReferee";
+}
+
+<h2>Наистина ли желаете да изтриете </h2>
+
+<table class="table table-striped">
+    <tr>
+        <td><img src="@Url.Content(Model.Picture)"/> @Model.Name</td>
+    </tr>
+</table>
+
+<a href="/admin/deleteFootballReferee" class="btn btn-success">Да</a><a href="/admin/footballReferees" class="btn btn-danger">Не</a>

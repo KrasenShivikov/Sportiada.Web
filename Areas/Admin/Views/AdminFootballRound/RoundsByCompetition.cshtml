@@ -1,0 +1,24 @@
+﻿@model IEnumerable<FootballRoundAdminModel>
+
+@{
+    ViewData["Title"] = "RoundsByCompetition";
+    string header = Model.Any() ? Model.FirstOrDefault().CompetitionName : "Кръгове";
+}
+
+<h2>@header</h2>
+
+<a href="/admin/createFootballRound">Добави кръг</a>
+<table class="table table-hover">
+    @if (Model.Any())
+    {
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td><a href="/admin/footballGamesByRound/@r.Id">@r.Name</a></td>
+                <td><a href="/admin/updateFootballRound/@r.Id">Промени</a> | <a href="/admin/deleteFootballRound/@r.Id">Изтрий</a></td>
+            </tr>
+        }
+    }
+
+</table>
+

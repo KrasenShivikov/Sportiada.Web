@@ -1,0 +1,56 @@
+﻿@model FootballRefereeViewModel
+
+<form id="form" method="post">
+    <div class="form-group" hidden>
+        <label asp-for="Id">ID на @Model.Id</label>
+        <input asp-for="Id" disabled class="form-control" />
+        <span asp-validation-for="Id" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name">@Model.Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group" hidden>
+        <label asp-for="BirthDate">Дата на раждане</label>
+        <input asp-for="BirthDate" type="date" class="form-control" />
+        <span asp-validation-for="BirthDate" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Picture">Снимка</label>
+        <input type="file" id="picture_file" /><input type="button" value="Добави снимка" id="picture_trigger" />
+        <input asp-for="Picture" class="form-control" id="picture"/>
+        <span asp-validation-for="Picture" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CountryId">Страни</label>
+        <select asp-for="CountryId" asp-items="Model.Countries" class="form-control">Град</select>
+        <span asp-validation-for="CountryId" class="form-text text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Въведи" />
+    </div>
+
+</form>
+
+<script>
+    let picturePath = '~/images/FootballReferees/';
+    let sliceIndex = 12;
+
+    let picture = document.getElementById('picture');
+    let trigger = document.getElementById('picture_trigger');
+    let file = document.getElementById('picture_file');
+    handleEventListener(trigger, picture, file, sliceIndex, picturePath);
+
+    function handleEventListener(trigger, element, fileElement, index, path) {
+        trigger.addEventListener('click', () => {
+            let fileElement_Text = fileElement.value.slice(index);
+            let fullPath = path + fileElement_Text;
+            element.value = fullPath;
+        })
+    }
+
+
+</script>

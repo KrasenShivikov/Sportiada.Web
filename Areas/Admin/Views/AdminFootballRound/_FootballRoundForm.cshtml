@@ -1,0 +1,17 @@
+﻿@model FootballRoundViewModel
+
+<form method="post">
+    <div class="form-group" hidden>
+        <label asp-for="CompetitionId">CompetitionId</label>
+        <input asp-for="CompetitionId" class="form-control" />
+        <span asp-validation-for="CompetitionId" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name">Име</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Въведи" />
+    </div>
+</form>
