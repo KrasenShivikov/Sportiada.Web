@@ -1,0 +1,126 @@
+﻿@model FootballGameStatisticFormModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <form method="post">
+                <div class="form-group" hidden>
+                    <label asp-for="Id">ID</label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TypeId">Тип</label>
+                    <select asp-items="@Model.GameStatisticTypes" asp-for="TypeId" class="form-control"></select>
+                    <span asp-validation-for="TypeId" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group" hidden>
+                    <label asp-for="GameId">ID на среща</label>
+                    <input asp-for="GameId" class="form-control" />
+                    <span asp-validation-for="GameId" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SquadId">ID на състав</label>
+                    <input asp-for="SquadId" class="form-control" id="inputSquadId" />
+                    <span asp-validation-for="SquadId" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BallPossession">Притежание на топката</label>
+                    <input asp-for="BallPossession" class="form-control" />
+                    <span asp-validation-for="BallPossession" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ShotsOnTarget">Удари във вратата</label>
+                    <input asp-for="ShotsOnTarget" class="form-control" />
+                    <span asp-validation-for="ShotsOnTarget" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ShotsWide">Удари извън вратата</label>
+                    <input asp-for="ShotsWide" class="form-control" />
+                    <span asp-validation-for="ShotsWide" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Corners">Корнери</label>
+                    <input asp-for="Corners" class="form-control" />
+                    <span asp-validation-for="Corners" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Fouls">Нарушения</label>
+                    <input asp-for="Fouls" class="form-control" />
+                    <span asp-validation-for="Fouls" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Offsides">Засади</label>
+                    <input asp-for="Offsides" class="form-control" />
+                    <span asp-validation-for="Offsides" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Въведи" />
+                </div>
+            </form>
+        </div>
+        <form id="form">
+            <div class="form-group">
+                <input type="text" id="search">
+                <input type="button" value="Търси" id="btn" />
+            </div>
+        </form>
+        <div class="col-lg-9">
+            @if (Model.Squads.Any())
+            {
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Отбор</th>
+                            <th>Сезон</th>
+                            <th>ID</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        @foreach (var s in Model.Squads)
+                        {
+                            <tr>
+                                <td>@s.TeamName</td>
+                                <td>@s.SeasonName</td>
+                                <td>@s.Id</td>
+                                <td><button class="squadIds">Добави ID</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+<script>
+    const tbody = document.getElementById('tbody');
+    const squads = Array.from(tbody.children);
+    const search = document.getElementById('search');
+    const btn = document.getElementById('btn');
+    const squadIds = Array.from(document.getElementsByClassName('squadIds'));
+    const inputSquadId = document.getElementById('inputSquadId');
+    console.log(btn)
+
+    btn.addEventListener('click', () => {
+        const squads = Array.from(tbody.children);
+
+        const arr = squads.filter(s => s.children[0].textContent.toLowerCase().includes(search.value.toLowerCase()));
+        console.log(arr);
+        squads.forEach(s => {
+            tbody.removeChild(s)
+        });
+
+        arr.forEach(e => {
+            tbody.appendChild(e)
+        });
+    });
+
+    squadIds.forEach(b => {
+        b.addEventListener('click', () => {
+            const id = b.parentElement.previousElementSibling.textContent;
+            inputSquadId.value = id;
+        });
+    });
+</script>
+
+

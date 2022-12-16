@@ -1,0 +1,46 @@
+﻿@model FootballPlayerViewModel
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="FirstName">Име</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName">Фамилия</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ProfileName">Съкратено име</label>
+        <input asp-for="ProfileName" class="form-control" />
+        <span asp-validation-for="ProfileName" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BirthDate">Дата на раждане</label>
+        <input asp-for="BirthDate" type="date" class="form-control" />
+        <span asp-validation-for="BirthDate" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BirthPlace">Място на раждане</label>
+        <input asp-for="BirthPlace" class="form-control" />
+        <span asp-validation-for="BirthPlace" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Height">Височина</label>
+        <input asp-for="Height" class="form-control" />
+        <span asp-validation-for="Height" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Foot">Силен крак</label>
+        <select asp-for="Foot" class="form-control">
+            <option value="Ляв">Ляв</option>
+            <option value="Десен">Десен</option>
+            <option value="Двата">Двата</option>
+        </select>
+        <span asp-validation-for="Foot" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Въведи" />
+    </div>
+</form>

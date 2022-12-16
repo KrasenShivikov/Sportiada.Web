@@ -1,0 +1,107 @@
+﻿@model FootballPlayerTransferViewModel   
+
+<form method="post">
+    <div class="form-group" hidden>
+        <label asp-for="Id">ID</label>
+        <input asp-for="Id" class="form-control"/>
+        <span asp-validation-for="Id" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group" hidden>
+        <label asp-for="PlayerId">PlayerId</label>
+        <input asp-for="PlayerId" class="form-control" />
+        <span asp-validation-for="PlayerId" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Season">Сезон</label>
+        <input asp-for="Season" class="form-control" />
+        <span asp-validation-for="Season" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Date">Дата</label>
+        <input asp-for="Date" class="form-control" />
+        <span asp-validation-for="Date" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PreviousTeam">Предишен отбор</label>
+        <input asp-for="PreviousTeam" class="form-control" />
+        <span asp-validation-for="PreviousTeam" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+
+        <label asp-for="PreviousTeamLogo">Емблема на предишен отбор</label>
+        <input type="file" id="ptl_file"/><input type="button" value="Добави емблема" id="ptl_trigger"/>
+        <input asp-for="PreviousTeamLogo" class="form-control" id="ptl" />
+        <span asp-validation-for="PreviousTeamLogo" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PreviousTeamCountryFlag">Знаме на страна на предишен отбор</label>
+        <input type="file" id="ptcf_file" /><input type="button" value="Добави емблема" id="ptcf_trigger" />
+        <input asp-for="PreviousTeamCountryFlag" class="form-control" id="ptcf"/>
+        <span asp-validation-for="PreviousTeamCountryFlag" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CurrentTeam">Следващ отбор</label>
+        <input asp-for="CurrentTeam" class="form-control" />
+        <span asp-validation-for="CurrentTeam" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CurrentTeamLogo">Емблема на следващ отбор</label>
+        <input type="file" id="ctl_file" /><input type="button" value="Добави емблема" id="ctl_trigger" />
+        <input asp-for="CurrentTeamLogo" class="form-control" id="ctl"/>
+        <span asp-validation-for="CurrentTeamLogo" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CurrentTeamCountryFlag">Знаме на страна на следващ отбор</label>
+        <input type="file" id="ctcf_file" /><input type="button" value="Добави емблема" id="ctcf_trigger" />
+        <input asp-for="CurrentTeamCountryFlag" class="form-control" id="ctcf" />
+        <span asp-validation-for="CurrentTeamCountryFlag" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TransferPrice">Транферна цена</label>
+        <input asp-for="TransferPrice" class="form-control" />
+        <span asp-validation-for="TransferPrice" class="form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="OnLoan">Под наем</label>
+        <input asp-for="OnLoan" class="form-control" />
+        <span asp-validation-for="OnLoan" class="form-text text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Въведи" />
+    </div>
+</form>
+
+<script>
+    let teamLogosPath = '~/images/FootballTeamsLogos/';
+    let countryFlagsPath = '~/images/countries/';
+    let sliceIndex = 12;
+
+    let ptl = document.getElementById('ptl');
+    let ptl_trigger = document.getElementById('ptl_trigger');
+    let ptl_file = document.getElementById('ptl_file');
+    handleEventListener(ptl_trigger, ptl, ptl_file, sliceIndex, teamLogosPath);
+
+    let ptcf = document.getElementById('ptcf');
+    let ptcf_trigger = document.getElementById('ptcf_trigger');
+    let ptcf_file = document.getElementById('ptcf_file');
+    handleEventListener(ptcf_trigger, ptcf, ptcf_file, sliceIndex, countryFlagsPath);
+
+    let ctl = document.getElementById('ctl');
+    let ctl_trigger = document.getElementById('ctl_trigger');
+    let ctl_file = document.getElementById('ctl_file');
+    handleEventListener(ctl_trigger, ctl, ctl_file, sliceIndex, teamLogosPath);
+
+    let ctcf = document.getElementById('ctcf');
+    let ctcf_trigger = document.getElementById('ctcf_trigger');
+    let ctcf_file = document.getElementById('ctcf_file');
+    handleEventListener(ctcf_trigger, ctcf, ctcf_file, sliceIndex, countryFlagsPath);
+
+    function handleEventListener(trigger, element, fileElement, index, path) {
+        trigger.addEventListener('click', () => {
+            let fileElement_Text = fileElement.value.slice(index);
+            let fullPath = path + fileElement_Text;
+            element.value = fullPath;
+        })  
+    }
+</script>

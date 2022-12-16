@@ -1,0 +1,131 @@
+﻿@model IEnumerable<FootballPlayerAdminModel>
+
+<h2>Футболисти</h2>
+<a href="/admin">Към начална страница</a>
+<form id="form">
+    <div class="form-group">
+        <input type="text" id="search">
+        <input type="button" value="Търси" id="btn" />
+        <input type="submit" value="Всички">
+    </div>
+</form>
+<table class="table table-striped" id="table">
+    <thead id="thead">
+        <tr>
+            <th>Име</th>
+            <th>Страни</th>
+            <th><a class="btn btn-primary" href="/admin/createFootballPlayer">Създай футболист</a></th>
+        </tr>
+    </thead>
+    <tbody id="tbody">
+        @foreach (var player in Model)
+        {
+            <tr class="player">
+                <td><img src="@Url.Content(player.Picture)" height="20" width="15" /><a href="/admin/footballPlayer/@player.Id">@player.FirstName @player.LastName</a></td>
+                <td>
+                    @if (player.Countries != null)
+                    {
+                        foreach (var country in player.Countries)
+                        {
+                            <p><img src="@Url.Content(@country.PicturePath)" height="20" width="30" /></p>
+                        }
+                    }
+                </td>
+                <td>
+                    <a href="/admin/updateFootballPlayer/@player.Id">Промени</a> |
+                    <a href="/admin/deleteFootballPlayer/@player.Id">Изтрий</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+</table>
+<script src="~/js/Search.js">
+
+</script>
+
+
+@*<nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li>
+                <a id="prev" class="button" disabled><</a>
+                <a id="next" class="page-link">></a>
+            </li>
+        </ul>
+    </nav>*@
+
+@*<script>
+        const playerNumbers = 20;
+        let pageCount = 0;
+
+        const trs = document.getElementsByClassName('player');
+        const arr = Array.from(trs);
+        const table = document.getElementById('table');
+        const thead = document.getElementById('thead');
+        const theadChildren = Array.from(thead.children);
+        const tbody = document.getElementById('tbody');
+        const tbodyChildren = Array.from(tbody.children);
+        const prev = document.getElementById('prev');
+        const next = document.getElementById('next');
+
+        table.appendChild(thead);
+        theadChildren.forEach(e => {
+            thead.appendChild(e);
+        });
+        table.appendChild(tbody);
+
+        const pages = [];
+        while (arr.length !== 0) {
+            const elements = arr.splice(0, playerNumbers);
+            pages.push(elements);
+        }
+
+        console.log(pageCount);
+
+        tbodyChildren.forEach(e => {
+            tbody.removeChild(e);
+        });
+
+        pages[pageCount].forEach(e => {
+            tbody.appendChild(e);
+        });
+
+        prev.addEventListener('click', () => {
+            pageCount--;
+            console.log(pageCount)
+
+            const tbodyChildren = Array.from(tbody.children);
+            tbodyChildren.forEach(e => {
+                tbody.removeChild(e);
+            });
+            pages[pageCount].forEach(e => {
+                tbody.appendChild(e);
+            });
+
+            //if (pageCount <= 0) {
+
+
+            //}
+        });
+
+        next.addEventListener('click', () => {
+            pageCount++;
+            console.log(pageCount)
+            if (pageCount <= pages.length) {
+                const tbodyChildren = Array.from(tbody.children);
+                tbodyChildren.forEach(e => {
+                    tbody.removeChild(e);
+                });
+
+                pages[pageCount].forEach(e => {
+                    tbody.appendChild(e);
+                });
+            } else {
+                next.setAttribute('disabled', '')
+            }
+        });
+
+    </script>*@
+
+

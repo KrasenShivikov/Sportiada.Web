@@ -1,0 +1,36 @@
+﻿@model FootballPlayerTransferViewModel
+
+@{
+    ViewData["Title"] = "DeleteTransfer";
+}
+
+<h2>Наистина ли желаете да изтриете</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>сезон</th>
+        <th>дата</th>
+        <th colspan="3">от</th>
+        <th colspan="3">в</th>
+        <th>трансферна цена</th>
+        <th>под наем</th>
+        <th></th>
+    </tr>
+
+        <tr>
+            <td>@Model.Season</td>
+            <td>@Model.Date</td>
+            <td><img src="@Url.Content(Model.PreviousTeamLogo)" height="20" width="20" /></td>
+            <td><img src="@Url.Content(Model.PreviousTeamCountryFlag)" height="20" width="20" /></td>
+            <td>@Model.PreviousTeam</td>
+            <td><img src="@Url.Content(Model.CurrentTeamLogo)" height="20" width="20" /></td>
+            <td><img src="@Url.Content(Model.CurrentTeamCountryFlag)" height="20" width="20" /></td>
+            <td>@Model.CurrentTeam</td>
+            <td>@Model.TransferPrice</td>
+            <td>@Model.OnLoan</td>
+        </tr>
+
+</table>
+
+<a href="/admin/deletePlayerTransfer" class="btn btn-success">Да</a><a href="/admin/footballPlayer/@Model.PlayerId" class="btn btn-danger">Не</a>
+

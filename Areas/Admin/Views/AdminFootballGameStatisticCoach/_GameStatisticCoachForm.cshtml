@@ -1,0 +1,60 @@
+﻿@model FootballGameStatisticCoachFormModel
+
+<div class="container">
+    <dvi class="row">
+        <div class="col-lg-3">
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="CoachId" >ID на треньор</label>
+                    <input asp-for="CoachId" class="form-control" id="inputId"/>
+                    <span asp-validation-for="Id" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group" hidden>
+                    <label asp-for="GameStattisticId">ID на статистиката</label>
+                    <input asp-for="GameStattisticId" class="form-control" />
+                    <span asp-validation-for="GameStattisticId" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Въведи" />
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-9">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Страна</th>
+                        <th>Име</th>
+                        <th>ID на треньор</th>
+                    </tr>
+                </thead>
+                <tbody id="coaches">
+                    @foreach (var c in Model.Coaches)
+                    {
+                        <tr>
+                            <td><img src="@Url.Content(c.CountryPicture)" height="20" width="30"/></td>
+                            <td> <img src="@Url.Content(c.Picture)" height="30" width="20" /> @c.FirstName @c.LastName</td>
+                            <td>@c.Id</td>
+                            <td><button class="btnIds">Добави ID</button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </dvi>
+</div>
+<script>
+    const body = document.getElementById('coaches');
+    const players = Array.from(document.getElementById('coaches').children);
+
+    const inputId = document.getElementById('inputId');
+    const btnIds = Array.from(document.getElementsByClassName('btnIds'));
+
+    btnIds.forEach(e => {
+        e.addEventListener('click', () => {
+            const coachId = e.parentElement.previousElementSibling.textContent;
+            inputId.value = coachId;
+        });
+    });
+
+</script>

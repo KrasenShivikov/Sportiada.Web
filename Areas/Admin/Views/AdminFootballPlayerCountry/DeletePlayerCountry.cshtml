@@ -1,0 +1,11 @@
+﻿@model PlayerCountryViewModel 
+
+@{
+    ViewData["Title"] = "DeletePlayerCountry";
+}
+
+<h2>Наистина ли искате да изтриете "<img src="@Url.Content(Model.Country.PicturePath)" height="20" width="30" />@Model.Country.Name"</h2>
+
+<a href="/admin/deletePlayerCountry" class="btn btn-success">Да</a><a  class="btn btn-danger" href="/admin/footballPlayer/@Model.PlayerId">Не</a>
+
+

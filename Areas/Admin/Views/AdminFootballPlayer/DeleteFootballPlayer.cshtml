@@ -1,0 +1,55 @@
+﻿@model FootballPlayerProfileAdminModel
+
+@{
+    ViewData["Title"] = "DeleteFootballPlayer";
+}
+
+
+
+<h3>Наистина ли искате да изтриете:</h3>
+<table class="table table-striped ">
+    <tr>
+        <td>Име</td>
+        <td><img src="@Url.Content(Model.Picture)" height="20" width="30" />@Model.FirstName @Model.LastName</td>
+    </tr>
+    <tr>
+        <td>Страни</td>
+        <td>
+            @if (Model.Countries != null)
+            {
+                foreach (var c in Model.Countries)
+                {                 
+                    <p><img src="@Url.Content(c.PicturePath)" height="15" width="20" /> c.Name</p>
+                }
+            }
+            else
+            {
+                <p>Няма</p>
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>Място на раждане</td>
+        <td>@Model.BirthPlace</td>
+    </tr>
+    <tr>
+        <td>Дата на раждане</td>
+        <td>@Model.BirthDate.Day.@Model.BirthDate.Month.@Model.BirthDate.Year</td>
+    </tr>
+    <tr>
+        <td>Години</td>
+        <td>@Model.Age</td>
+        
+    </tr>
+    <tr>
+        <td>Височина</td>
+        <td>@Model.Height</td>
+    </tr>
+    <tr>
+        <td>Силен Крак</td>
+        <td>@Model.Foot</td>
+    </tr>
+</table>
+
+
+<a class="btn btn-success" href="/admin/deleteFootballPlayer" role="button">Да</a> <a class="btn btn-danger" href="/admin/footballPlayers" role="button">Не</a>

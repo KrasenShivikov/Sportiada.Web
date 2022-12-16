@@ -1,0 +1,21 @@
+﻿@model FootballGoalDeleteModel
+
+@{
+    ViewData["Title"] = "DeleteGoal";
+}
+
+<h2>Наистина ли желаете да изтриете</h2>
+
+@{ 
+    string firstHalf = Model.FirstHalf ? "първо полувреме" : "второ полувреме";
+}
+
+<table class="table table-bordered">
+    <tr>
+        <td><img src="@Url.Content(Model.TypePicture)" height="20" width="20"/> @Model.Minute' - @firstHalf</td>
+        <td><img src="@Url.Content(Model.Country)" height="20" width="30" /> @Model.PlayerName</td>
+    </tr>
+</table>
+
+<a href="/admin/deleteGoal" class="btn btn-success">Да</a><a href="/admin/footballGame/@Model.GameId" class="btn btn-danger">Не</a>
+

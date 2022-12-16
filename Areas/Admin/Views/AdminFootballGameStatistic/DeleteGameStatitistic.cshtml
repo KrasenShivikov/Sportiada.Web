@@ -1,0 +1,36 @@
+﻿@model FootballGameStatisticDeleteModel
+
+@{
+    ViewData["Title"] = "DeleteGameStatitistic";
+}
+
+<h2>Наитина ли искате да изтриете</h2>
+<table class="table table-bordered">
+    <tr>
+        <th>Притежане на топката</th>
+        <td>@Model.BallPossession %</td>
+    </tr>
+    <tr>
+        <th>Удари във вратата</th>
+        <td>@Model.ShotsOnTarget</td>
+    </tr>
+    <tr>
+        <th>Удари извън вратата</th>
+        <td>@Model.ShotsWide</td>
+    </tr>
+    <tr>
+        <th>Корнери</th>
+        <td>@Model.Corners</td>
+    </tr>
+    <tr>
+        <th>Нарушения</th>
+        <td>@Model.Fouls</td>
+    </tr>
+    <tr>
+        <th>Засади</th>
+        <td>@Model.Offsides</td>
+    </tr>
+</table>
+
+<a class="btn btn-success" href="/admin/deleteGameStatistic">да</a><a class="btn btn-danger" href="/admin/footballGame/@Model.GameId">Не</a>
+

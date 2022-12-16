@@ -1,0 +1,88 @@
+﻿@model FootballGameRefereeFormModel
+
+<div class="container">
+    <dvi class="row">
+        <div class="col-lg-3">
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="RefereeId">ID на рефер</label>
+                    <input asp-for="RefereeId" class="form-control" id="inputId" />
+                    <span asp-validation-for="RefereeId" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group" hidden>
+                    <label asp-for="GameId">ID на статистиката</label>
+                    <input asp-for="GameId" class="form-control" />
+                    <span asp-validation-for="GameId" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TypeId">ID на статистиката</label>
+                    <select asp-for="TypeId" asp-items="@Model.RefereeTypes" class="form-control"></select>
+                    <span asp-validation-for="TypeId" class="form-text text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Въведи" />
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-9">
+            <form id="form">
+                <div class="form-group">
+                    <input type="text" id="search">
+                    <input type="button" value="Търси" id="btn" />
+                    <input type="submit" value="Всички">
+                </div>
+            </form>
+            <table class="table table-hover">
+                <tbody id="tbody">
+                    @foreach (var r in Model.Referees)
+                    {
+                        <tr>
+                            <td><img src="@Url.Content(r.Country.PicturePath)" height="20" width="30" /></td>
+                            <td>@r.Name</td>
+                            <td>@r.Id</td>
+                            <td><button class="btnIds">Добави ID</button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </dvi>
+</div>
+<script>
+
+    const inputId = document.getElementById('inputId');
+    const btnIds = Array.from(document.getElementsByClassName('btnIds'));
+
+    btnIds.forEach(e => {
+        e.addEventListener('click', () => {
+            const refereeId = e.parentElement.previousElementSibling.textContent;
+            inputId.value = refereeId;
+        });
+    });
+
+    const btn = document.getElementById('btn');
+    const tbody = document.getElementById('tbody');
+    const elements = Array.from(tbody.children);
+
+    btn.addEventListener('click', () => {
+        const search = document.getElementById('search');
+        const tbody = document.getElementById('tbody');
+        const arr = Array.from(tbody.children);
+
+        const value = search.value;
+        const results = elements.filter(t => t.children[1].textContent.toLowerCase().includes(value.toLowerCase()));
+
+        if (value != '') {
+            arr.forEach(t => {
+                tbody.removeChild(t);
+            })
+
+            results.forEach(r => {
+                tbody.appendChild(r);
+            })
+        }
+
+
+    })
+
+</script>

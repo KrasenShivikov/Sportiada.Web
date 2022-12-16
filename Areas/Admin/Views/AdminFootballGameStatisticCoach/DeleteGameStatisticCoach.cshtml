@@ -1,0 +1,16 @@
+﻿@model FootballGameStatisticCoachDeleteModel
+
+@{
+    ViewData["Title"] = "DeleteGameStatisticCoach";
+}
+
+<h2>Наистина ли желаете да изтриете</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <td><img src="@Url.Content(Model.Country)" height="20" width="30" /> @Model.CoachName</td>
+    </tr>
+</table>
+
+<a href="/admin/deleteGameStatisticCoach" class="btn btn-success">Да</a><a href="/admin/footballGame/@Model.GameId" class="btn btn-danger">Не</a>
+

@@ -1,0 +1,16 @@
+﻿@model FootballGameRefereeAdminModel
+
+@{
+    ViewData["Title"] = "DeleteGameReferee";
+}
+
+<h2>Наистина ли желаете да изтриете</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <td><img src="@Url.Content(Model.Referee.Country.PicturePath)" height="20" width="30" /> @Model.Referee.Name</td>
+    </tr>
+</table>
+
+<a href="/admin/deleteGameReferee" class="btn btn-success">Да</a><a href="/admin/footballGame/@Model.GameId" class="btn btn-danger">Не</a>
+
