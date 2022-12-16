@@ -18,17 +18,18 @@
             => View(this.players.ProfileById(id));
 
 
-        [Route("football/player/{id}/{seasonId}")]
-        public IActionResult PlayerSeasonStatistic(int id, int seasonId)
-        {
-            try
-            {
-                return View(this.players.PlayerSeasonStatistic(id, seasonId));
-            }
-            catch (System.Exception)
-            {
-                return RedirectToAction("ProfileById");
-            }          
-        }
+        //[Route("football/player/{id}/{seasonId}")]
+        //public IActionResult PlayerSeasonStatistic(int id, int seasonId)
+        //{
+        //    return View(this.players.PlayerSeasonStatistic(id, seasonId));
+        //    try
+        //    {
+        //        return View(this.players.PlayerSeasonStatistic(id, seasonId));
+        //    }
+        //    catch (System.Exception)
+        //    {
+        //        return RedirectToAction("ProfileById");
+        //    }
+        //}
     }
 }
