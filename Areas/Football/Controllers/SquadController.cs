@@ -27,7 +27,7 @@
         //    =>View(this.squads.ById(id));
 
         [Route("football/squad/{teamId}/{squadId}/{seasonId}")]
-        public IActionResult SquadWithPlayersStatistic(int teamId, int squadId, int seasonId, string seasonName)
+        public IActionResult SquadWithPlayersStatistic(int teamId, int squadId, int seasonId)
         {
             var model = new SquadPlayersStatisticModel
             {
@@ -35,6 +35,18 @@
                 Games = games.GamesBySquadBySeason(squadId, seasonId),
                 Players = players.PlayersBySquad(squadId),
                 Coaches = coaches.CoachesBySquad(squadId)
+            };
+
+            return View(model);
+        }
+
+        [Route("football/squadSquadstatistic/{teamId}/{squadid}/{seasonId}")]
+        public IActionResult SquadOverallSeasonStatistic(int teamId, int squadId, int seasonId)
+        {
+            var model = new SquadSeasonStatisticModel
+            {
+                Games = games.GamesBySquadBySeason(squadId, seasonId),
+                TeamId = teamId
             };
 
             return View(model);
