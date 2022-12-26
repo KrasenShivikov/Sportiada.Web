@@ -2,14 +2,17 @@
 
 @{
     ViewData["Title"] = "FootballSquad";
+    int squadId = Model.Games.FirstOrDefault().TeamsStatistic.Where(s => s.Squad.Team.Id == Model.TeamId).FirstOrDefault().Squad.Id;
+    int seasonId = Model.Games.FirstOrDefault().Round.Competition.Season.Id;
 }
 
-<head>
+<style>
+    span {
+        font-size:10px;
+    }
+</style>
 
-</head>
-
-
-<h2><a href="/admin/footballTeam/@Model.TeamId">@Model.PlayersGamesStatistic.FirstOrDefault().Value.FirstOrDefault().PlayerTeam</a> - сезон @Model.Games.FirstOrDefault().Round.Competition.Season.Name </h2>
+<h2>@Model.PlayersGamesStatistic.FirstOrDefault().Value.FirstOrDefault().PlayerTeam - сезон <a href="/football/squadSeasonStatistic/@Model.TeamId/@squadId/@seasonId">@Model.Games.FirstOrDefault().Round.Competition.Season.Name</a></h2>
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -188,22 +191,31 @@
                                         @inLineUp
                                         @if (g.SubstituteOut != null)
                                         {
-                                            <p><img src="@Url.Content(g.SubstituteOut.Icon)" height="20" width="20" />@g.SubstituteOut.Minute</p>
+                                            <img src="@Url.Content(g.SubstituteOut.Icon)" height="15" width="15" /><span style="font-size:10px">@g.SubstituteOut.Minute</span>
                                         }
                                     </td>
                                     <td>
                                         @isReserve
                                         @if (g.SubstituteIn != null)
                                         {
-                                            <p><img src="@Url.Content(g.SubstituteIn.Icon)" height="20" width="20" />@g.SubstituteIn.Minute</p>
+                                            <img src="@Url.Content(g.SubstituteIn.Icon)" height="15" width="15" /><span>@g.SubstituteIn.Minute</span>
                                         }
                                     </td>
-                                    <td>@sideline</td>
+                                    <td>
+                                        @sideline
+                                        @if (g.SidelineReasons.Any())
+                                        {
+                                            foreach (var r in g.SidelineReasons)
+                                            {
+                                                <img src="@Url.Content(r)" height="15" width="15" />
+                                            }
+                                        }
+                                    </td>
 
                                     <td>
                                         @if (g.YellowCard != null)
                                         {
-                                            <p><img src="@Url.Content(g.YellowCard.Icon)" height="20" width="20" />@g.YellowCard.Minute</p>
+                                            <img src="@Url.Content(g.YellowCard.Icon)" height="15" width="15" /><span>@g.YellowCard.Minute</span>
                                         }
                                         else
                                         {
@@ -213,12 +225,12 @@
                                     <td>
                                         @if (g.RedCard != null)
                                         {
-                                            <p><img src="@Url.Content(g.RedCard.Icon)" height="20" width="20" />@g.RedCard.Minute</p>
+                                            <img src="@Url.Content(g.RedCard.Icon)" height="15" width="15" /><span>@g.RedCard.Minute</span>
 
                                         }
                                         else if (g.SecondYellowCard != null)
                                         {
-                                            <p><img src="@Url.Content(g.SecondYellowCard.Icon)" height="20" width="20" />@g.SecondYellowCard.Minute</p>
+                                            <img src="@Url.Content(g.SecondYellowCard.Icon)" height="15" width="15" /><span>@g.SecondYellowCard.Minute</span>
                                         }
                                         else
                                         {
@@ -230,7 +242,7 @@
                                         {
                                             foreach (var gl in g.ScoredGoals)
                                             {
-                                                <p><img src="@Url.Content(gl.Icon)" height="20" width="20" />@gl.Minute</p>
+                                                <img src="@Url.Content(gl.Icon)" height="15" width="15" /><span>@gl.Minute</span>
                                             }
                                         }
                                         else
@@ -243,7 +255,7 @@
                                         {
                                             foreach (var ag in g.OwnGoals)
                                             {
-                                                <p><img src="@Url.Content(ag.Icon)" height="20" width="20" />@ag.Minute</p>
+                                                <img src="@Url.Content(ag.Icon)" height="15" width="15" /><span>@ag.Minute</span>
                                             }
                                         }
                                         else
@@ -256,7 +268,7 @@
                                         {
                                             foreach (var ga in g.GoalAssistances)
                                             {
-                                                <p>@ga.Minute</p>
+                                                <span>@ga.Minute</span>
                                             }
                                         }
                                         else
@@ -269,7 +281,7 @@
                                         {
                                             foreach (var gl in g.AllowedGoals)
                                             {
-                                                <p><img src="@Url.Content(gl.Icon)" height="20" width="20" />@gl.Minute</p>
+                                                <img src="@Url.Content(gl.Icon)" height="15" width="15" /><span>@gl.Minute</span>
                                             }
                                         }
                                         else
@@ -282,7 +294,7 @@
                                         {
                                             foreach (var sp in g.ScoredPenalties)
                                             {
-                                                <p><img src="@Url.Content(sp.Icon)" height="20" width="20" />@sp.Minute</p>
+                                                <img src="@Url.Content(sp.Icon)" height="15" width="15" /><span>@sp.Minute</span>
                                             }
                                         }
                                         else
@@ -295,7 +307,7 @@
                                         {
                                             foreach (var mp in g.MissedPenalties)
                                             {
-                                                <p><img src="@Url.Content(mp.Icon)" height="20" width="20" />@mp.Minute</p>
+                                                <img src="@Url.Content(mp.Icon)" height="15" width="15" /><span>@mp.Minute</span>
                                             }
                                         }
                                         else
@@ -308,7 +320,7 @@
                                         {
                                             foreach (var sp in g.SavedPenalties)
                                             {
-                                                <p><img src="@Url.Content(sp.Icon)" height="20" width="20" />@sp.Minute</p>
+                                                <img src="@Url.Content(sp.Icon)" height="15" width="15" /><span>@sp.Minute</span>
                                             }
                                         }
                                         else
