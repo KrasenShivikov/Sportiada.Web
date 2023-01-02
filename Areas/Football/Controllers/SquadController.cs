@@ -40,7 +40,7 @@
             return View(model);
         }
 
-        [Route("football/squadSquadstatistic/{teamId}/{squadid}/{seasonId}")]
+        [Route("football/squadSeasonStatistic/{teamId}/{squadid}/{seasonId}")]
         public IActionResult SquadOverallSeasonStatistic(int teamId, int squadId, int seasonId)
         {
             var model = new SquadSeasonStatisticModel
