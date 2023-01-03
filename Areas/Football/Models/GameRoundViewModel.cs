@@ -104,8 +104,9 @@
 
         private string getTeamName(string sideName)
         {
-            int index = sideName.IndexOf(' ');
-            return sideName.Substring(0, index);
+            int index = sideName.IndexOf('-');
+            string teamName = sideName.Substring(0, index).TrimEnd();
+            return teamName;
         }
 
         private void AddTeam(string teamName, List<TeamTableModel> teamsTable, bool isHostWin, bool isGuestWin, bool isDraw, GameModel game, bool isTeamHost)
