@@ -5,34 +5,35 @@
     int tournamentId = Model.games.First().TournamentId;
     int seasonId = Model.games.First().SeasonId;
     string roundName = Model.games.First().Round;
+    string tournamentName = Model.games.FirstOrDefault().Tournament;
+    string season = Model.games.FirstOrDefault().Season;
 }
 <div class="container">
-    <div class="row">
-        <div class="col-lg-11">
-        </div>
-        <div class="col-lg-1">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Кръгове
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    @foreach (var round in Model.rounds)
-                    {
-                        <a class="dropdown-item" href="/football/game/round/@tournamentId/@seasonId/@round.Id">@round.Name</a>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-    </div>
-    <div class="row">
+    <h2>@tournamentName - @season</h2>
+    <div class="row">       
         <div class=" col-lg-2">
             @Html.PartialAsync("_CompetitionsByCountry").Result
         </div>
         <div class="col-lg-10">
-            <h1>@roundName</h1>
             <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="5">@roundName</th>
+                        <th style="text-align:right">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Кръгове
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @foreach (var round in Model.rounds)
+                                    {
+                                        <p><a class="dropdown-item" href="/football/game/round/@tournamentId/@seasonId/@round.Id">@round.Name</a></p>
+                                    }
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
                 <tbody>
                     @foreach (var game in Model.games)
                     {
@@ -54,26 +55,32 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <td></td>
-                    <td>Отбор</td>
-                    <td>д.</td>
-                    <td>п.</td>
-                    <td>р.</td>
-                    <td>з.</td>
-                    <td>г.р.</td>
-                    <td>т.</td>
-                    <td>г.</td>
-                    <td>п.</td>
-                    <td>р.</td>
-                    <td>з.</td>
-                    <td>г.р.</td>
-                    <td>т.</td>
-                    <td>о.</td>
-                    <td>п.</td>
-                    <td>р.</td>
-                    <td>з.</td>
-                    <td>г.р.</td>
-                    <td>т.</td>
+                    <th colspan="2" style="border-inline-end-color: black"></th>
+                    <th colspan="6" style="text-align: center; border-inline-end-color: black">ДОМАКИН</th>
+                    <th colspan="6" style="text-align: center; border-inline-end-color: black">ГОСТ</th>
+                    <th colspan="6" style="text-align: center; border-inline-end-color: black">ОБЩО</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th style="border-inline-end-color: black">Отбор</th>
+                    <th>д.</th>
+                    <th>п.</th>
+                    <th>р.</th>
+                    <th>з.</th>
+                    <th>г.р.</th>
+                    <th style="border-inline-end-color: black">т.</th>
+                    <th>г.</th>
+                    <th>п.</th>
+                    <th>р.</th>
+                    <th>з.</th>
+                    <th>г.р.</th>
+                    <th style="border-inline-end-color: black">т.</th>
+                    <th>о.</th>
+                    <th>п.</th>
+                    <th>р.</th>
+                    <th>з.</th>
+                    <th>г.р.</th>
+                    <th style="border-inline-end-color: black">т.</th>
                 </tr>          
             </thead>
             <tbody>
@@ -81,25 +88,25 @@
                 {
                 <tr>
                     <td>@team.Rank</td>
-                    <td>@team.TeamName</td>
+                    <td style="border-inline-end-color: black">@team.TeamName</td>
                     <td>@team.HostMathes</td>
                     <td>@team.HostWins</td>
                     <td>@team.HostDraws</td>
                     <td>@team.HostLoses</td>
                     <td>@team.HostScoredGoals - @team.HostAllowedGoals</td>
-                    <td>@team.HostPoints</td>
+                    <td style="border-inline-end-color: black">@team.HostPoints</td>
                     <td>@team.GuestMathes</td>
                     <td>@team.GuestWins</td>
                     <td>@team.GuestDraws</td>
                     <td>@team.GuestLoses</td>
                     <td>@team.GuestScoredGoals - @team.GuestAllowedGoals</td>
-                    <td>@team.GuestPoints</td>
+                    <td style="border-inline-end-color: black">@team.GuestPoints</td>
                     <td>@team.OverallMathes</td>
                     <td>@team.OverallWins</td>
                     <td>@team.OverallDraws</td>
                     <td>@team.OverallLoses</td>
                     <td>@team.OverallScoredGoals - @team.OverallAllowedGoals</td>
-                    <td>@team.OverallPoints</td>
+                    <td style="border-inline-end-color: black">@team.OverallPoints</td>
                 </tr>
                 }
             </tbody>
