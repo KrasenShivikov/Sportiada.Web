@@ -1,0 +1,189 @@
+﻿@model TournamentSeasonStatisticModel
+
+@{
+    ViewData["Title"] = "OverallStatisticByIdBySeasonId";
+    string tournamentName = Model.Games.FirstOrDefault().Round.Competition.Tournament.Name;
+    string seasonName = Model.Games.FirstOrDefault().Round.Competition.Season.Name;
+}
+
+<h2>Статистика @tournamentName - @seasonName</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>ГОЛМАЙСТОРИ</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>отбор</th>
+                        <th>име</th>
+                        <th>брой голове</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.GoalsStatistic)
+                    {
+                        <tr>
+                            <td>@p.TeamName</td>
+                            <td>@p.PlayerName</td>
+                            <td>@p.IndicatorCount</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>АСИСТЕНЦИИ</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>отбор</th>
+                        <th>име</th>
+                        <th>брой асистенции</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.GoalAsisstancesStatististic)
+                    {
+                        <tr>
+                            <td>@p.TeamName</td>
+                            <td>@p.PlayerName</td>
+                            <td>@p.IndicatorCount</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>ЖЪЛТИ КАРТОНИ</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>отбор</th>
+                        <th>име</th>
+                        <th>брой картони</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.YellowCardsStatistic)
+                    {
+                        <tr>
+                            <td>@p.TeamName</td>
+                            <td>@p.PlayerName</td>
+                            <td>@p.IndicatorCount</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>ЧЕРВЕНИ КАРТОНИ</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>отбор</th>
+                        <th>име</th>
+                        <th>брой картони</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.RedCardsStatistic)
+                    {
+                        <tr>
+                            <td>@p.TeamName</td>
+                            <td>@p.PlayerName</td>
+                            <td>@p.IndicatorCount</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>АВТОГОЛОВЕ</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>отбор</th>
+                        <th>име</th>
+                        <th>брой автоголове</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.OwnGoalsStatistic)
+                    {
+                        <tr>
+                            <td>@p.TeamName</td>
+                            <td>@p.PlayerName</td>
+                            <td>@p.IndicatorCount</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>ДУЗПИ</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>отбор</th>
+                        <th>име</th>
+                        <th>брой вкарани дузпи</th>
+                        <th>брой изпуснати дузпи</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.PenaltiesStatistic)
+                    {
+                        <tr>
+                            <td>@p.TeamName</td>
+                            <td>@p.PlayerName</td>
+                            <td>@p.ScoredPenalties</td>
+                            <td>@p.MissedPenalties</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>ПОКАЗАТЕЛИ НА ВРАТАРИТЕ</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>отбор</th>
+                        <th>име</th>
+                        <th>брой изиграни мачове</th>
+                        <th>брой чисти мрежи</th>
+                        <th>спасени дузпи</th>
+                        <th>неспасени дузпи</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.GoalkeepersStatistic)
+                    {
+                        <tr>
+                            <td>@p.TeamName</td>
+                            <td>@p.PlayerName</td>
+                            <td>@p.MatchCount</td>
+                            <td>@p.CleanWebCount</td>
+                            <td>@p.SavedPenalties</td>
+                            <td>@p.UnsavedPenalties</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
